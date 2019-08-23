@@ -41,7 +41,7 @@
 
 1. 3-Tier Architecture
 
-2. MongoDB
+2. MySql
 
 3. Reactor
 
