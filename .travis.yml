@@ -1,0 +1,52 @@
+language: java
+jdk:
+- openjdk11
+
+branches:
+  only:
+  - master
+
+cache:
+  directories:
+  - '$HOME/.m2/repository'
+  - '$HOME/.gradle'
+
+script: "./gradlew clean build"
+
+before_deploy:
+- zip -r I-am-Full-Stack *
+- mkdir -p deploy
+- mv MoHae-Server.zip deploy/MoHae-Server.zip
+
+deploy:
+- provider: s3
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
+  bucket: mohae-deploy
+  region: ap-northeast-2
+  skip_cleanup: true
+  acl: public_read
+  local_dir: deploy
+  wait-until-deployed: true
+  on:
+    repo: mohae-team/MoHae-Server
+    branch: master
+
+- provider: codedeploy
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
+  bucket: todolist-deploy
+  key: MoHae-Server.zip
+  bundle_type: zip
+  application: mohae
+  deployment_group: mohae-group
+  region: ap-northeast-2
+  wait-until-deployed: true
+  on:
+    repo: mohae-team/MoHae-Server
+    branch: master
+
+notifications:
+  email:
+    recipients:
+    - sugwer7464@gmail.com
