@@ -35,7 +35,7 @@ deploy:
 - provider: codedeploy
   access_key_id: $AWS_ACCESS_KEY
   secret_access_key: $AWS_SECRET_KEY
-  bucket: todolist-deploy
+  bucket: mohae-deploy
   key: MoHae-Server.zip
   bundle_type: zip
   application: mohae
