@@ -1,4 +1,4 @@
-# MoHae-Server
+# MoHae-Server [![Build Status](https://travis-ci.org/mohae-team/MoHae-Server.svg?branch=master)](https://travis-ci.org/mohae-team/MoHae-Server)
 
 ## People
 
