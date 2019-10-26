@@ -1,36 +1,29 @@
-package com.mohaeyo.mohae.MoHaeServer.repository;
+package com.mohaeyo.mohae.MoHaeServer.model.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Table(name = "user")
-@Entity
+import java.util.Collections;
+import java.util.List;
+
+@Document(collection = "user")
 public class User {
-    @Id
     String id;
 
-    @Column(name = "password")
     String password;
 
-    @Column(name = "username")
     String username;
 
-    @Column(name = "imageString")
-    String imageString;
+    List<Byte> imageByteList;
 
-    @Column(name = "address")
     String address;
 
-    @Column(name = "description")
     String description;
 
-    public User(String id, String password, String username, String imageString, String address, String description) {
+    public User(String id, String password, String username, List<Byte> imageByteList, String address, String description) {
         this.id = id;
         this.password = password;
         this.username = username;
-        this.imageString = imageString;
+        this.imageByteList = imageByteList;
         this.address = address;
         this.description = description;
     }
@@ -39,7 +32,7 @@ public class User {
         this.id = "";
         this.password = "";
         this.username = "";
-        this.imageString = "";
+        this.imageByteList = Collections.emptyList();
         this.address = "";
         this.description = "";
     }
@@ -68,12 +61,12 @@ public class User {
         this.username = username;
     }
 
-    public String getImageString() {
-        return imageString;
+    public List<Byte> getImageByteList() {
+        return imageByteList;
     }
 
-    public void setImageString(String imageString) {
-        this.imageString = imageString;
+    public void setImageByteList(List<Byte> imageByteList) {
+        this.imageByteList = imageByteList;
     }
 
     public String getAddress() {

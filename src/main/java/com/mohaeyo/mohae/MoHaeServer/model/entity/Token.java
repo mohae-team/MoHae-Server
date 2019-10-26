@@ -1,8 +1,9 @@
-package com.mohaeyo.mohae.MoHaeServer.repository;
+package com.mohaeyo.mohae.MoHaeServer.model.entity;
 
 import com.mohaeyo.mohae.MoHaeServer.exception.InvalidJwtAuthenticationException;
 import io.jsonwebtoken.*;
 
+import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -11,7 +12,7 @@ public class Token {
     private String token;
 
     public String createToken(String id) {
-        String key = "key";
+        String key = Base64.getEncoder().encodeToString("key".getBytes());
 
         Map<String, Object> headers = new HashMap<>();
         headers.put("typ", "JWT");

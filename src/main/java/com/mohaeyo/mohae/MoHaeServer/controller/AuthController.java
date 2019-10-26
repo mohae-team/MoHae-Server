@@ -4,12 +4,14 @@ import com.mohaeyo.mohae.MoHaeServer.exception.AlreadyExistException;
 import com.mohaeyo.mohae.MoHaeServer.exception.NotFoundException;
 import com.mohaeyo.mohae.MoHaeServer.model.request.SignInModel;
 import com.mohaeyo.mohae.MoHaeServer.model.request.SignUpModel;
-import com.mohaeyo.mohae.MoHaeServer.repository.Token;
-import com.mohaeyo.mohae.MoHaeServer.repository.User;
+import com.mohaeyo.mohae.MoHaeServer.model.entity.Token;
+import com.mohaeyo.mohae.MoHaeServer.model.entity.User;
 import com.mohaeyo.mohae.MoHaeServer.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Collections;
 import java.util.Optional;
 
 import static org.springframework.http.ResponseEntity.ok;
@@ -32,7 +34,7 @@ public class AuthController {
                     signUpModel.getId(),
                     signUpModel.getPassword(),
                     signUpModel.getUsername(),
-                    "",
+                    Collections.emptyList(),
                     signUpModel.getAddress(),
                     ""
             );
