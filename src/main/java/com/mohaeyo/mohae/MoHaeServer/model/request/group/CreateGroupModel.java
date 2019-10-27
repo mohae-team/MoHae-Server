@@ -1,4 +1,4 @@
-package com.mohaeyo.mohae.MoHaeServer.model.request;
+package com.mohaeyo.mohae.MoHaeServer.model.request.group;
 
 import java.util.List;
 

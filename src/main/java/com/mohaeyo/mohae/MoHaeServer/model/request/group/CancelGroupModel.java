@@ -1,6 +1,6 @@
-package com.mohaeyo.mohae.MoHaeServer.model.request;
+package com.mohaeyo.mohae.MoHaeServer.model.request.group;
 
-public class JoinGroupModel {
+public class CancelGroupModel {
     int id;
     String token;
 

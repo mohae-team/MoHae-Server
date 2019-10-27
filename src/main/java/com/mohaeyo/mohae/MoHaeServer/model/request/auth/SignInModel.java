@@ -1,4 +1,4 @@
-package com.mohaeyo.mohae.MoHaeServer.model.request;
+package com.mohaeyo.mohae.MoHaeServer.model.request.auth;
 
 public class SignInModel {
     String id;

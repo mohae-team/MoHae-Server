@@ -1,6 +1,6 @@
-package com.mohaeyo.mohae.MoHaeServer.model.request;
+package com.mohaeyo.mohae.MoHaeServer.model.request.feedback;
 
-public class GetGroupModel {
+public class GetFeedbackModel {
     String token;
     int postId;
 
