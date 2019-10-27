@@ -26,4 +26,9 @@ public class PlaceServiceImpl implements PlaceService {
     public void insertPlace(Place place) {
         placeRepository.insert(place);
     }
+
+    @Override
+    public void removePlace(Place place) {
+        placeRepository.delete(place);
+    }
 }

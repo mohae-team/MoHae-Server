@@ -12,4 +12,6 @@ public interface PlaceService {
     void insertPlace(Place place);
 
     void savePlace(Place place);
+
+    void removePlace(Place place);
 }
