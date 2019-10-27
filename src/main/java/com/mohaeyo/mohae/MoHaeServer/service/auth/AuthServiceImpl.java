@@ -1,4 +1,4 @@
-package com.mohaeyo.mohae.MoHaeServer.service;
+package com.mohaeyo.mohae.MoHaeServer.service.auth;
 
 import com.mohaeyo.mohae.MoHaeServer.model.entity.User;
 import com.mohaeyo.mohae.MoHaeServer.repository.UserRepository;

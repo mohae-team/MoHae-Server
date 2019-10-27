@@ -1,4 +1,4 @@
-package com.mohaeyo.mohae.MoHaeServer.model.request;
+package com.mohaeyo.mohae.MoHaeServer.model.request.group;
 
 public class GetListGroupModel {
     String token;

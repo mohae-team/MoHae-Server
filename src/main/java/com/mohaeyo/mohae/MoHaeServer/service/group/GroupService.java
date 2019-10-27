@@ -1,4 +1,4 @@
-package com.mohaeyo.mohae.MoHaeServer.service;
+package com.mohaeyo.mohae.MoHaeServer.service.group;
 
 import com.mohaeyo.mohae.MoHaeServer.model.entity.Group;
 
