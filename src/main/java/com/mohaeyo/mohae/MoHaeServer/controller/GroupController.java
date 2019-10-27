@@ -3,10 +3,7 @@ package com.mohaeyo.mohae.MoHaeServer.controller;
 import com.mohaeyo.mohae.MoHaeServer.exception.*;
 import com.mohaeyo.mohae.MoHaeServer.model.entity.Group;
 import com.mohaeyo.mohae.MoHaeServer.model.entity.User;
-import com.mohaeyo.mohae.MoHaeServer.model.request.CreateGroupModel;
-import com.mohaeyo.mohae.MoHaeServer.model.request.GetGroupModel;
-import com.mohaeyo.mohae.MoHaeServer.model.request.GetListGroupModel;
-import com.mohaeyo.mohae.MoHaeServer.model.request.JoinGroupModel;
+import com.mohaeyo.mohae.MoHaeServer.model.request.*;
 import com.mohaeyo.mohae.MoHaeServer.model.response.ResponseGroupModel;
 import com.mohaeyo.mohae.MoHaeServer.service.AuthService;
 import com.mohaeyo.mohae.MoHaeServer.service.GroupService;
@@ -51,6 +48,36 @@ public class GroupController {
                 }
             } else {
                 throw new ResetContentException("People max");
+            }
+        } else {
+            throw new NotFoundException("Id Not Found");
+        }
+    }
+
+    @DeleteMapping("/cancel")
+    public ResponseEntity cancelGroup(@RequestBody CancelGroupModel cancelGroupModel) {
+        int postId = cancelGroupModel.getId();
+        String token = cancelGroupModel.getToken();
+
+        String id = verifyToken(token);
+
+        Optional<Group> group = groupService.findGroup(postId);
+
+        if (group.isPresent()) {
+            List<String> list = group.get().getPeopleId();
+
+            if (list.contains(id)) {
+                if (list.size() > 1) {
+                    list.remove(id);
+                    group.get().setPeopleId(list);
+                    groupService.saveGroup(group.get());
+                    return ResponseEntity.ok().build();
+                } else {
+                    groupService.removeGroup(group.get());
+                    return ResponseEntity.ok().build();
+                }
+            } else {
+                throw new NotFoundException("Not Joined");
             }
         } else {
             throw new NotFoundException("Id Not Found");

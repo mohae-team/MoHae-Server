@@ -10,6 +10,8 @@ public interface GroupService {
 
     void saveGroup(Group group);
 
+    void removeGroup(Group group);
+
     void insertGroup(Group group);
 
     List<Group> findAddressAllGroup(String address);

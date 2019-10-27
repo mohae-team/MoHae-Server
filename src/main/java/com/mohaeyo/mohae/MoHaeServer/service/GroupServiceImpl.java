@@ -31,6 +31,11 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
+    public void removeGroup(Group group) {
+        groupRepository.delete(group);
+    }
+
+    @Override
     public void insertGroup(Group group) {
         groupRepository.insert(group);
     }
