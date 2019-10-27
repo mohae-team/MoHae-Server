@@ -33,20 +33,30 @@ public class Token {
                 .compact();
     }
 
-    public boolean validateToken(String token) {
-        try {
-            Jws<Claims> claims = Jwts.parser()
-                    .setSigningKey("key")
-                    .parseClaimsJws(token);
+    public String verifyToken(String token) {
+        String key = Base64.getEncoder().encodeToString(Base64.getEncoder().encodeToString("key".getBytes()).getBytes());
+        JwtParser jwtParser = Jwts.parser();
+        Claims claims = jwtParser
+                .setSigningKey(key)
+                .parseClaimsJws(token)
+                .getBody();
 
-            return !claims.getBody().getExpiration().before(new Date());
-        } catch (JwtException | IllegalArgumentException e) {
+        Date exp = claims.getExpiration();
+        Date now = new Date();
+
+        if (exp.after(now)) {
+            return claims.get("data", String.class);
+        } else {
             throw new InvalidJwtAuthenticationException("Expired or invalid JWT token");
         }
     }
 
     public Token(User user) {
         token = this.createToken(user.getId());
+    }
+
+    public Token() {
+
     }
 
     public Map<Object, Object> getTokenResponse() {
