@@ -1,6 +1,6 @@
 package com.mohaeyo.mohae.MoHaeServer.service;
 
-import com.mohaeyo.mohae.MoHaeServer.repository.User;
+import com.mohaeyo.mohae.MoHaeServer.model.entity.User;
 
 import java.util.Optional;
 
