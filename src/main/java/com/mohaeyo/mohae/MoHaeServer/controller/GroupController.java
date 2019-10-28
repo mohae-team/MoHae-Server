@@ -2,7 +2,7 @@ package com.mohaeyo.mohae.MoHaeServer.controller;
 
 import com.mohaeyo.mohae.MoHaeServer.exception.*;
 import com.mohaeyo.mohae.MoHaeServer.model.entity.Group;
-import com.mohaeyo.mohae.MoHaeServer.model.entity.Token;
+import com.mohaeyo.mohae.MoHaeServer.service.auth.Token;
 import com.mohaeyo.mohae.MoHaeServer.model.entity.User;
 import com.mohaeyo.mohae.MoHaeServer.model.request.group.*;
 import com.mohaeyo.mohae.MoHaeServer.model.response.ResponseGroupModel;

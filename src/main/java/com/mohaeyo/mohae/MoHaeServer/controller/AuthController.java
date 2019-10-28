@@ -4,7 +4,7 @@ import com.mohaeyo.mohae.MoHaeServer.exception.AlreadyExistException;
 import com.mohaeyo.mohae.MoHaeServer.exception.NotFoundException;
 import com.mohaeyo.mohae.MoHaeServer.model.request.auth.SignInModel;
 import com.mohaeyo.mohae.MoHaeServer.model.request.auth.SignUpModel;
-import com.mohaeyo.mohae.MoHaeServer.model.entity.Token;
+import com.mohaeyo.mohae.MoHaeServer.service.auth.Token;
 import com.mohaeyo.mohae.MoHaeServer.model.entity.User;
 import com.mohaeyo.mohae.MoHaeServer.service.auth.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;

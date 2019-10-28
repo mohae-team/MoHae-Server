@@ -3,7 +3,7 @@ package com.mohaeyo.mohae.MoHaeServer.controller;
 import com.mohaeyo.mohae.MoHaeServer.exception.NotFoundException;
 import com.mohaeyo.mohae.MoHaeServer.model.entity.Feedback;
 import com.mohaeyo.mohae.MoHaeServer.model.entity.Place;
-import com.mohaeyo.mohae.MoHaeServer.model.entity.Token;
+import com.mohaeyo.mohae.MoHaeServer.service.auth.Token;
 import com.mohaeyo.mohae.MoHaeServer.model.entity.User;
 import com.mohaeyo.mohae.MoHaeServer.model.request.feedback.CreateFeedbackModel;
 import com.mohaeyo.mohae.MoHaeServer.model.request.feedback.GetFeedbackModel;

@@ -1,6 +1,7 @@
-package com.mohaeyo.mohae.MoHaeServer.model.entity;
+package com.mohaeyo.mohae.MoHaeServer.service.auth;
 
 import com.mohaeyo.mohae.MoHaeServer.exception.InvalidJwtAuthenticationException;
+import com.mohaeyo.mohae.MoHaeServer.model.entity.User;
 import io.jsonwebtoken.*;
 
 import java.util.Base64;
