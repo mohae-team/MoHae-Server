@@ -3,7 +3,6 @@ package com.mohaeyo.mohae.MoHaeServer.model.request.qa;
 import java.util.List;
 
 public class CreateQAModel {
-    String token;
 
     String title;
 
@@ -12,14 +11,6 @@ public class CreateQAModel {
     List<Byte> imageByteList;
 
     String description;
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
 
     public String getTitle() {
         return title;

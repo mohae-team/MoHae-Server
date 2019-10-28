@@ -3,8 +3,6 @@ package com.mohaeyo.mohae.MoHaeServer.model.request.mypage;
 import java.util.List;
 
 public class EditMyPageModel {
-    String token;
-
     List<Byte> imageByteList;
 
     String username;
@@ -12,14 +10,6 @@ public class EditMyPageModel {
     String address;
 
     String description;
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
 
     public List<Byte> getImageByteList() {
         return imageByteList;

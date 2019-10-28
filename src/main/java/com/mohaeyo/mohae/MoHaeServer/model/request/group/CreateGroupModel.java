@@ -3,7 +3,6 @@ package com.mohaeyo.mohae.MoHaeServer.model.request.group;
 import java.util.List;
 
 public class CreateGroupModel {
-    String token;
     String title;
     String location;
     String address;
@@ -67,14 +66,6 @@ public class CreateGroupModel {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
     }
 
     public String getAddress() {

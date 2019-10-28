@@ -26,8 +26,8 @@ public class QAController {
     AuthService authService;
 
     @PostMapping("/question/create")
-    public ResponseEntity createQa(@RequestBody CreateQAModel createQaModel) {
-        String id = new Token().verifyToken(createQaModel.getToken());
+    public ResponseEntity createQa(@RequestHeader String token, @RequestBody CreateQAModel createQaModel) {
+        String id = new Token().verifyToken(token);
 
         Optional<User> user = authService.getUserById(id);
 
@@ -52,8 +52,8 @@ public class QAController {
     }
 
     @PostMapping("/answer/create")
-    public ResponseEntity createAnswer(@RequestBody CreateAnswerModel createAnswerModel) {
-        String id = new Token().verifyToken(createAnswerModel.getToken());
+    public ResponseEntity createAnswer(@RequestHeader String token, @RequestBody CreateAnswerModel createAnswerModel) {
+        String id = new Token().verifyToken(token);
 
         Optional<User> user = authService.getUserById(id);
         Optional<QA> qa = qaService.findQa(createAnswerModel.getPostId());
@@ -78,8 +78,8 @@ public class QAController {
     }
 
     @GetMapping("/question/list")
-    public ResponseEntity getListQuestion(@RequestBody GetListQAModel getListQaModel) {
-        String id = new Token().verifyToken(getListQaModel.getToken());
+    public ResponseEntity getListQuestion(@RequestHeader String token) {
+        String id = new Token().verifyToken(token);
         Optional<User> user = authService.getUserById(id);
 
         if (user.isPresent()) {

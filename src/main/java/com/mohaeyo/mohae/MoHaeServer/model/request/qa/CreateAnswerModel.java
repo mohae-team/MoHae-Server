@@ -1,8 +1,6 @@
 package com.mohaeyo.mohae.MoHaeServer.model.request.qa;
 
 public class CreateAnswerModel {
-    String token;
-
     int postId;
 
     String answer;
@@ -13,14 +11,6 @@ public class CreateAnswerModel {
 
     public void setPostId(int postId) {
         this.postId = postId;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
     }
 
     public String getAnswer() {
