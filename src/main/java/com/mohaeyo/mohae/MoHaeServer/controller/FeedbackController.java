@@ -3,11 +3,10 @@ package com.mohaeyo.mohae.MoHaeServer.controller;
 import com.mohaeyo.mohae.MoHaeServer.exception.NotFoundException;
 import com.mohaeyo.mohae.MoHaeServer.model.entity.Feedback;
 import com.mohaeyo.mohae.MoHaeServer.model.entity.Place;
-import com.mohaeyo.mohae.MoHaeServer.model.entity.Token;
+import com.mohaeyo.mohae.MoHaeServer.service.auth.Token;
 import com.mohaeyo.mohae.MoHaeServer.model.entity.User;
 import com.mohaeyo.mohae.MoHaeServer.model.request.feedback.CreateFeedbackModel;
 import com.mohaeyo.mohae.MoHaeServer.model.request.feedback.GetFeedbackModel;
-import com.mohaeyo.mohae.MoHaeServer.model.request.feedback.GetListFeedbackModel;
 import com.mohaeyo.mohae.MoHaeServer.model.request.feedback.LikeFeedbackModel;
 import com.mohaeyo.mohae.MoHaeServer.model.response.ResponseFeedbackModel;
 import com.mohaeyo.mohae.MoHaeServer.service.auth.AuthService;
@@ -34,9 +33,8 @@ public class FeedbackController {
     PlaceService placeService;
 
     @PostMapping("/like")
-    public ResponseEntity likeFeedback(@RequestBody LikeFeedbackModel likeFeedbackModel) {
+    public ResponseEntity likeFeedback(@RequestHeader String token, @RequestBody LikeFeedbackModel likeFeedbackModel) {
         int postId = likeFeedbackModel.getId();
-        String token = likeFeedbackModel.getToken();
 
         String id = new Token().verifyToken(token);
 
@@ -74,9 +72,8 @@ public class FeedbackController {
     }
 
     @PostMapping("/hate")
-    public ResponseEntity hateFeedback(@RequestBody LikeFeedbackModel likeFeedbackModel) {
+    public ResponseEntity hateFeedback(@RequestHeader String token, @RequestBody LikeFeedbackModel likeFeedbackModel) {
         int postId = likeFeedbackModel.getId();
-        String token = likeFeedbackModel.getToken();
 
         String id = new Token().verifyToken(token);
 
@@ -130,8 +127,8 @@ public class FeedbackController {
     }
 
     @GetMapping("/list")
-    public ResponseEntity getListFeedback(@RequestBody GetListFeedbackModel getListGroupModel) {
-        String id = new Token().verifyToken(getListGroupModel.getToken());
+    public ResponseEntity getListFeedback(@RequestHeader String token) {
+        String id = new Token().verifyToken(token);
         Optional<User> user = authService.getUserById(id);
 
         if (user.isPresent()) {
@@ -144,14 +141,14 @@ public class FeedbackController {
     }
 
     @GetMapping("/detail")
-    public ResponseEntity getFeedback(@RequestBody GetFeedbackModel getFeedbackModel) {
+    public ResponseEntity getFeedback(@RequestHeader String token, @RequestBody GetFeedbackModel getFeedbackModel) {
         Optional<Feedback> feedback = feedbackService.findFeedback(getFeedbackModel.getPostId());
         if (feedback.isPresent()) {
             List<String> likePeopleId = feedback.get().getLikePeopleId();
             List<String> hatePeopleId = feedback.get().getHatePeopleId();
-            if (likePeopleId.contains(new Token().verifyToken(getFeedbackModel.getToken()))) {
+            if (likePeopleId.contains(new Token().verifyToken(token))) {
                 return ResponseEntity.ok(new ResponseFeedbackModel(feedback.get(), true, false));
-            } else if (hatePeopleId.contains(new Token().verifyToken(getFeedbackModel.getToken()))) {
+            } else if (hatePeopleId.contains(new Token().verifyToken(token))) {
                 return ResponseEntity.ok(new ResponseFeedbackModel(feedback.get(), false, true));
             } else {
                 return ResponseEntity.ok(new ResponseFeedbackModel(feedback.get(), false, false));

@@ -2,7 +2,6 @@ package com.mohaeyo.mohae.MoHaeServer.model.request.group;
 
 public class JoinGroupModel {
     int id;
-    String token;
 
     public int getId() {
         return id;
@@ -10,13 +9,5 @@ public class JoinGroupModel {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
     }
 }

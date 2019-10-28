@@ -1,8 +1,11 @@
 package com.mohaeyo.mohae.MoHaeServer.model.entity;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.util.Collections;
 import java.util.List;
 
+@Document(collection = "feedback")
 public class Feedback {
     int id;
 

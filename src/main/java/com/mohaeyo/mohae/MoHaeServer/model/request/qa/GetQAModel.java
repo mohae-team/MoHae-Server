@@ -1,6 +1,6 @@
-package com.mohaeyo.mohae.MoHaeServer.model.request.feedback;
+package com.mohaeyo.mohae.MoHaeServer.model.request.qa;
 
-public class GetFeedbackModel {
+public class GetQAModel {
     int postId;
 
     public int getPostId() {

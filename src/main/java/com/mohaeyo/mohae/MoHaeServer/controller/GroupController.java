@@ -2,7 +2,7 @@ package com.mohaeyo.mohae.MoHaeServer.controller;
 
 import com.mohaeyo.mohae.MoHaeServer.exception.*;
 import com.mohaeyo.mohae.MoHaeServer.model.entity.Group;
-import com.mohaeyo.mohae.MoHaeServer.model.entity.Token;
+import com.mohaeyo.mohae.MoHaeServer.service.auth.Token;
 import com.mohaeyo.mohae.MoHaeServer.model.entity.User;
 import com.mohaeyo.mohae.MoHaeServer.model.request.group.*;
 import com.mohaeyo.mohae.MoHaeServer.model.response.ResponseGroupModel;
@@ -24,9 +24,8 @@ public class GroupController {
     AuthService authService;
 
     @PostMapping("/join")
-    public ResponseEntity joinGroup(@RequestBody JoinGroupModel joinGroupModel) {
+    public ResponseEntity joinGroup(@RequestHeader String token, @RequestBody JoinGroupModel joinGroupModel) {
         int postId = joinGroupModel.getId();
-        String token = joinGroupModel.getToken();
 
         String id = new Token().verifyToken(token);
 
@@ -53,9 +52,8 @@ public class GroupController {
     }
 
     @DeleteMapping("/cancel")
-    public ResponseEntity cancelGroup(@RequestBody CancelGroupModel cancelGroupModel) {
+    public ResponseEntity cancelGroup(@RequestHeader String token, @RequestBody CancelGroupModel cancelGroupModel) {
         int postId = cancelGroupModel.getId();
-        String token = cancelGroupModel.getToken();
 
         String id = new Token().verifyToken(token);
 
@@ -83,8 +81,8 @@ public class GroupController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity createGroup(@RequestBody CreateGroupModel createGroupModel) {
-        String id = new Token().verifyToken(createGroupModel.getToken());
+    public ResponseEntity createGroup(@RequestHeader String token, @RequestBody CreateGroupModel createGroupModel) {
+        String id = new Token().verifyToken(token);
 
         List<String> peopleList = new ArrayList<>();
         peopleList.add(id);
@@ -108,8 +106,8 @@ public class GroupController {
     }
 
     @GetMapping("/list")
-    public ResponseEntity getListGroup(@RequestBody GetListGroupModel getListGroupModel) {
-        String id = new Token().verifyToken(getListGroupModel.getToken());
+    public ResponseEntity getListGroup(@RequestHeader String token) {
+        String id = new Token().verifyToken(token);
         Optional<User> user = authService.getUserById(id);
 
         if (user.isPresent()) {
@@ -124,11 +122,11 @@ public class GroupController {
     }
 
     @GetMapping("/detail")
-    public ResponseEntity getGroup(@RequestBody GetGroupModel getGroupModel) {
+    public ResponseEntity getGroup(@RequestHeader String token, @RequestBody GetGroupModel getGroupModel) {
         Optional<Group> group = groupService.findGroup(getGroupModel.getPostId());
         if (group.isPresent()) {
             List<String> peopleId = group.get().getPeopleId();
-            if (peopleId.contains(new Token().verifyToken(getGroupModel.getToken()))) {
+            if (peopleId.contains(new Token().verifyToken(token))) {
                 return ResponseEntity.ok(new ResponseGroupModel(group.get(), true));
             } else {
                 return ResponseEntity.ok(new ResponseGroupModel(group.get(), false));

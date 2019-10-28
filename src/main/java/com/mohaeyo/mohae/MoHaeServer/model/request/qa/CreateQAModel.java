@@ -1,15 +1,15 @@
-package com.mohaeyo.mohae.MoHaeServer.model.request.group;
+package com.mohaeyo.mohae.MoHaeServer.model.request.qa;
 
 import java.util.List;
 
-public class CreateGroupModel {
+public class CreateQAModel {
+
     String title;
-    String location;
-    String address;
-    String term;
+
     String summary;
-    int maxCount;
+
     List<Byte> imageByteList;
+
     String description;
 
     public String getTitle() {
@@ -18,22 +18,6 @@ public class CreateGroupModel {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public String getTerm() {
-        return term;
-    }
-
-    public void setTerm(String term) {
-        this.term = term;
     }
 
     public String getSummary() {
@@ -52,27 +36,11 @@ public class CreateGroupModel {
         this.imageByteList = imageByteList;
     }
 
-    public int getMaxCount() {
-        return maxCount;
-    }
-
-    public void setMaxCount(int maxCount) {
-        this.maxCount = maxCount;
-    }
-
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
     }
 }
