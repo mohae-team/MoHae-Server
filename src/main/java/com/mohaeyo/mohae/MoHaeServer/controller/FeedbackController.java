@@ -33,10 +33,10 @@ public class FeedbackController {
     PlaceService placeService;
 
     @PostMapping("/like")
-    public ResponseEntity likeFeedback(@RequestHeader String token, @RequestBody LikeFeedbackModel likeFeedbackModel) {
+    public ResponseEntity likeFeedback(@RequestHeader String authorization, @RequestBody LikeFeedbackModel likeFeedbackModel) {
         int postId = likeFeedbackModel.getId();
 
-        String id = new Token().verifyToken(token);
+        String id = new Token().verifyToken(authorization);
 
         Optional<Feedback> feedback = feedbackService.findFeedback(postId);
 
@@ -72,10 +72,10 @@ public class FeedbackController {
     }
 
     @PostMapping("/hate")
-    public ResponseEntity hateFeedback(@RequestHeader String token, @RequestBody LikeFeedbackModel likeFeedbackModel) {
+    public ResponseEntity hateFeedback(@RequestHeader String authorization, @RequestBody LikeFeedbackModel likeFeedbackModel) {
         int postId = likeFeedbackModel.getId();
 
-        String id = new Token().verifyToken(token);
+        String id = new Token().verifyToken(authorization);
 
         Optional<Feedback> feedback = feedbackService.findFeedback(postId);
 

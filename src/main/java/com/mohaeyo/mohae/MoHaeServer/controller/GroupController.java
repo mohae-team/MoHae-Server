@@ -24,10 +24,10 @@ public class GroupController {
     AuthService authService;
 
     @PostMapping("/join")
-    public ResponseEntity joinGroup(@RequestHeader String token, @RequestBody JoinGroupModel joinGroupModel) {
+    public ResponseEntity joinGroup(@RequestHeader String authorization, @RequestBody JoinGroupModel joinGroupModel) {
         int postId = joinGroupModel.getId();
 
-        String id = new Token().verifyToken(token);
+        String id = new Token().verifyToken(authorization);
 
         Optional<Group> group = groupService.findGroup(postId);
 
@@ -52,10 +52,10 @@ public class GroupController {
     }
 
     @DeleteMapping("/cancel")
-    public ResponseEntity cancelGroup(@RequestHeader String token, @RequestBody CancelGroupModel cancelGroupModel) {
+    public ResponseEntity cancelGroup(@RequestHeader String authorization, @RequestBody CancelGroupModel cancelGroupModel) {
         int postId = cancelGroupModel.getId();
 
-        String id = new Token().verifyToken(token);
+        String id = new Token().verifyToken(authorization);
 
         Optional<Group> group = groupService.findGroup(postId);
 
@@ -81,8 +81,8 @@ public class GroupController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity createGroup(@RequestHeader String token, @RequestBody CreateGroupModel createGroupModel) {
-        String id = new Token().verifyToken(token);
+    public ResponseEntity createGroup(@RequestHeader String authorization, @RequestBody CreateGroupModel createGroupModel) {
+        String id = new Token().verifyToken(authorization);
 
         List<String> peopleList = new ArrayList<>();
         peopleList.add(id);
@@ -106,8 +106,8 @@ public class GroupController {
     }
 
     @GetMapping("/list")
-    public ResponseEntity getListGroup(@RequestHeader String token) {
-        String id = new Token().verifyToken(token);
+    public ResponseEntity getListGroup(@RequestHeader String authorization) {
+        String id = new Token().verifyToken(authorization);
         Optional<User> user = authService.getUserById(id);
 
         if (user.isPresent()) {
@@ -122,11 +122,11 @@ public class GroupController {
     }
 
     @GetMapping("/detail")
-    public ResponseEntity getGroup(@RequestHeader String token, @RequestBody GetGroupModel getGroupModel) {
+    public ResponseEntity getGroup(@RequestHeader String authorization, @RequestBody GetGroupModel getGroupModel) {
         Optional<Group> group = groupService.findGroup(getGroupModel.getPostId());
         if (group.isPresent()) {
             List<String> peopleId = group.get().getPeopleId();
-            if (peopleId.contains(new Token().verifyToken(token))) {
+            if (peopleId.contains(new Token().verifyToken(authorization))) {
                 return ResponseEntity.ok(new ResponseGroupModel(group.get(), true));
             } else {
                 return ResponseEntity.ok(new ResponseGroupModel(group.get(), false));

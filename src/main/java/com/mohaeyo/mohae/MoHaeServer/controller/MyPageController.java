@@ -20,9 +20,9 @@ public class MyPageController {
     AuthService authService;
 
     @PostMapping("/edit")
-    public ResponseEntity editProfile(@RequestHeader String token, @RequestBody EditMyPageModel editMyPageModel) {
+    public ResponseEntity editProfile(@RequestHeader String authorization, @RequestBody EditMyPageModel editMyPageModel) {
         Optional<User> user = authService.getUserById(
-                new Token().verifyToken(token));
+                new Token().verifyToken(authorization));
 
         if (user.isPresent()) {
             user.get().setUsername(editMyPageModel.getUsername());
@@ -39,9 +39,9 @@ public class MyPageController {
     }
 
     @PostMapping("/get")
-    public ResponseEntity getProfile(@RequestHeader String token) {
+    public ResponseEntity getProfile(@RequestHeader String authorization) {
         Optional<User> user = authService.getUserById(
-                new Token().verifyToken(token));
+                new Token().verifyToken(authorization));
         if (user.isPresent()) {
             return ok(user.get());
         } else {
