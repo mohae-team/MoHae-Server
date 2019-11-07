@@ -41,7 +41,7 @@ public class GroupController {
                     list.add(id);
                     group.get().setPeopleId(list);
                     groupService.saveGroup(group.get());
-                    return ResponseEntity.ok().build();
+                    return ResponseEntity.ok(group.get());
                 }
             } else {
                 throw new ResetContentException("People max");
@@ -67,10 +67,10 @@ public class GroupController {
                     list.remove(id);
                     group.get().setPeopleId(list);
                     groupService.saveGroup(group.get());
-                    return ResponseEntity.ok().build();
+                    return ResponseEntity.ok(group.get());
                 } else {
                     groupService.removeGroup(group.get());
-                    return ResponseEntity.ok().build();
+                    return ResponseEntity.ok(group.get());
                 }
             } else {
                 throw new NotFoundException("Not Joined");
@@ -102,7 +102,7 @@ public class GroupController {
 
         groupService.insertGroup(group);
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(group);
     }
 
     @GetMapping("/list")

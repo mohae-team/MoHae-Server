@@ -48,7 +48,7 @@ public class PlaceController {
                     )
             );
 
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok(place.get());
         }
     }
 }

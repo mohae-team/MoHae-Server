@@ -45,7 +45,7 @@ public class QAController {
 
             qaService.insertQA(qa);
 
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok(qa);
         } else {
             throw new NotFoundException("Id Not Found");
         }
@@ -68,7 +68,7 @@ public class QAController {
                 qa.get().setAnswerList(answerList);
                 qaService.insertQA(qa.get());
 
-                return ResponseEntity.ok().build();
+                return ResponseEntity.ok(qa);
             } else {
                 throw new NotFoundException("Qa Not Found");
             }

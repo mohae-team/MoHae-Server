@@ -53,7 +53,7 @@ public class FeedbackController {
                 feedback.get().setLikePeopleId(likeList);
                 feedbackService.saveFeedback(feedback.get());
 
-                return ResponseEntity.ok().build();
+                return ResponseEntity.ok(feedback.get());
             } else {
                 feedbackService.removeFeedback(feedback.get());
 
@@ -61,7 +61,7 @@ public class FeedbackController {
                 if (place.isPresent()) {
                     placeService.removePlace(place.get());
 
-                    return ResponseEntity.ok().build();
+                    return ResponseEntity.ok(feedback.get());
                 } else {
                     throw new NotFoundException("Place Not Found");
                 }
@@ -94,7 +94,7 @@ public class FeedbackController {
             } else {
                 feedbackService.removeFeedback(feedback.get());
             }
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok(feedback.get());
         } else {
             throw new NotFoundException("Id Not Found");
         }
@@ -120,7 +120,7 @@ public class FeedbackController {
 
             feedbackService.insertFeedback(feedback);
 
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok(feedback);
         } else {
             throw new NotFoundException("Location Not Found");
         }

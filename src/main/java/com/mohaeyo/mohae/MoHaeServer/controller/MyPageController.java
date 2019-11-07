@@ -32,7 +32,7 @@ public class MyPageController {
 
             authService.saveUser(user.get());
 
-            return ok().build();
+            return ok(user.get());
         } else {
             throw new NotFoundException("Id Not Found");
         }
@@ -43,7 +43,7 @@ public class MyPageController {
         Optional<User> user = authService.getUserById(
                 new Token().verifyToken(token));
         if (user.isPresent()) {
-            return ok(user);
+            return ok(user.get());
         } else {
             throw new NotFoundException("Id Not Found");
         }
