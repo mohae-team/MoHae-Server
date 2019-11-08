@@ -38,7 +38,7 @@ public class MyPageController {
         }
     }
 
-    @PostMapping("/get")
+    @GetMapping("/get")
     public ResponseEntity getProfile(@RequestHeader String authorization) {
         Optional<User> user = authService.getUserById(
                 new Token().verifyToken(authorization));
