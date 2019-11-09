@@ -35,7 +35,8 @@ public class Token {
     }
 
     public String verifyToken(String token) {
-        if (token.contains("Bearer")) {
+        if (token.contains("Bearer ")) {
+            token = token.replace("Bearer ", "");
             String key = Base64.getEncoder().encodeToString(Base64.getEncoder().encodeToString("key".getBytes()).getBytes());
             JwtParser jwtParser = Jwts.parser();
             Claims claims = jwtParser
