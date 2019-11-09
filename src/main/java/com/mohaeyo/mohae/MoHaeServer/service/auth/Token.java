@@ -35,18 +35,22 @@ public class Token {
     }
 
     public String verifyToken(String token) {
-        String key = Base64.getEncoder().encodeToString(Base64.getEncoder().encodeToString("key".getBytes()).getBytes());
-        JwtParser jwtParser = Jwts.parser();
-        Claims claims = jwtParser
-                .setSigningKey(key)
-                .parseClaimsJws(token)
-                .getBody();
+        if (token.contains("Bearer")) {
+            String key = Base64.getEncoder().encodeToString(Base64.getEncoder().encodeToString("key".getBytes()).getBytes());
+            JwtParser jwtParser = Jwts.parser();
+            Claims claims = jwtParser
+                    .setSigningKey(key)
+                    .parseClaimsJws(token)
+                    .getBody();
 
-        Date exp = claims.getExpiration();
-        Date now = new Date();
+            Date exp = claims.getExpiration();
+            Date now = new Date();
 
-        if (exp.after(now)) {
-            return claims.get("data", String.class);
+            if (exp.after(now)) {
+                return claims.get("data", String.class);
+            } else {
+                throw new InvalidJwtAuthenticationException("Expired or invalid JWT token");
+            }
         } else {
             throw new InvalidJwtAuthenticationException("Expired or invalid JWT token");
         }

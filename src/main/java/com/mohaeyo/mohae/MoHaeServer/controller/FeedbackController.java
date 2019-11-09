@@ -33,7 +33,7 @@ public class FeedbackController {
     PlaceService placeService;
 
     @PostMapping("/like")
-    public ResponseEntity likeFeedback(@RequestHeader String authorization, @RequestBody LikeFeedbackModel likeFeedbackModel) {
+    public ResponseEntity likeFeedback(@RequestHeader("Authorization") String authorization, @RequestBody LikeFeedbackModel likeFeedbackModel) {
         int postId = likeFeedbackModel.getId();
 
         String id = new Token().verifyToken(authorization);
@@ -72,7 +72,7 @@ public class FeedbackController {
     }
 
     @PostMapping("/hate")
-    public ResponseEntity hateFeedback(@RequestHeader String authorization, @RequestBody LikeFeedbackModel likeFeedbackModel) {
+    public ResponseEntity hateFeedback(@RequestHeader("Authorization") String authorization, @RequestBody LikeFeedbackModel likeFeedbackModel) {
         int postId = likeFeedbackModel.getId();
 
         String id = new Token().verifyToken(authorization);
@@ -127,7 +127,7 @@ public class FeedbackController {
     }
 
     @GetMapping("/list")
-    public ResponseEntity getListFeedback(@RequestHeader String token) {
+    public ResponseEntity getListFeedback(@RequestHeader("Authorization") String token) {
         String id = new Token().verifyToken(token);
         Optional<User> user = authService.getUserById(id);
 
@@ -141,7 +141,7 @@ public class FeedbackController {
     }
 
     @GetMapping("/detail")
-    public ResponseEntity getFeedback(@RequestHeader String token, @RequestBody GetFeedbackModel getFeedbackModel) {
+    public ResponseEntity getFeedback(@RequestHeader("Authorization") String token, @RequestBody GetFeedbackModel getFeedbackModel) {
         Optional<Feedback> feedback = feedbackService.findFeedback(getFeedbackModel.getPostId());
         if (feedback.isPresent()) {
             List<String> likePeopleId = feedback.get().getLikePeopleId();

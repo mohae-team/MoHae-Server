@@ -24,7 +24,7 @@ public class GroupController {
     AuthService authService;
 
     @PostMapping("/join")
-    public ResponseEntity joinGroup(@RequestHeader String authorization, @RequestBody JoinGroupModel joinGroupModel) {
+    public ResponseEntity joinGroup(@RequestHeader("Authorization") String authorization, @RequestBody JoinGroupModel joinGroupModel) {
         int postId = joinGroupModel.getId();
 
         String id = new Token().verifyToken(authorization);
@@ -52,7 +52,7 @@ public class GroupController {
     }
 
     @DeleteMapping("/cancel")
-    public ResponseEntity cancelGroup(@RequestHeader String authorization, @RequestBody CancelGroupModel cancelGroupModel) {
+    public ResponseEntity cancelGroup(@RequestHeader("Authorization") String authorization, @RequestBody CancelGroupModel cancelGroupModel) {
         int postId = cancelGroupModel.getId();
 
         String id = new Token().verifyToken(authorization);
@@ -81,7 +81,7 @@ public class GroupController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity createGroup(@RequestHeader String authorization, @RequestBody CreateGroupModel createGroupModel) {
+    public ResponseEntity createGroup(@RequestHeader("Authorization") String authorization, @RequestBody CreateGroupModel createGroupModel) {
         String id = new Token().verifyToken(authorization);
 
         List<String> peopleList = new ArrayList<>();
@@ -106,7 +106,7 @@ public class GroupController {
     }
 
     @GetMapping("/list")
-    public ResponseEntity getListGroup(@RequestHeader String authorization) {
+    public ResponseEntity getListGroup(@RequestHeader("Authorization") String authorization) {
         String id = new Token().verifyToken(authorization);
         Optional<User> user = authService.getUserById(id);
 
@@ -122,7 +122,7 @@ public class GroupController {
     }
 
     @GetMapping("/detail")
-    public ResponseEntity getGroup(@RequestHeader String authorization, @RequestBody GetGroupModel getGroupModel) {
+    public ResponseEntity getGroup(@RequestHeader("Authorization") String authorization, @RequestBody GetGroupModel getGroupModel) {
         Optional<Group> group = groupService.findGroup(getGroupModel.getPostId());
         if (group.isPresent()) {
             List<String> peopleId = group.get().getPeopleId();

@@ -20,7 +20,7 @@ public class MyPageController {
     AuthService authService;
 
     @PostMapping("/edit")
-    public ResponseEntity editProfile(@RequestHeader String authorization, @RequestBody EditMyPageModel editMyPageModel) {
+    public ResponseEntity editProfile(@RequestHeader("Authorization") String authorization, @RequestBody EditMyPageModel editMyPageModel) {
         Optional<User> user = authService.getUserById(
                 new Token().verifyToken(authorization));
 
@@ -39,7 +39,7 @@ public class MyPageController {
     }
 
     @GetMapping("/get")
-    public ResponseEntity getProfile(@RequestHeader String authorization) {
+    public ResponseEntity getProfile(@RequestHeader("Authorization") String authorization) {
         Optional<User> user = authService.getUserById(
                 new Token().verifyToken(authorization));
         if (user.isPresent()) {
