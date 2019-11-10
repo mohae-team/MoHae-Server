@@ -11,7 +11,6 @@ public class CreateGroupModel {
     String term;
     String summary;
     int maxCount;
-    MultipartFile imageFile;
     String description;
 
     public String getTitle() {
@@ -44,14 +43,6 @@ public class CreateGroupModel {
 
     public void setSummary(String summary) {
         this.summary = summary;
-    }
-
-    public MultipartFile getImageFile() {
-        return imageFile;
-    }
-
-    public void setImageFile(MultipartFile imageFile) {
-        this.imageFile = imageFile;
     }
 
     public int getMaxCount() {

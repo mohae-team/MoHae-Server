@@ -10,8 +10,6 @@ public class CreateQAModel {
 
     String summary;
 
-    MultipartFile imageFile;
-
     String description;
 
     public String getTitle() {
@@ -28,14 +26,6 @@ public class CreateQAModel {
 
     public void setSummary(String summary) {
         this.summary = summary;
-    }
-
-    public MultipartFile getImageFile() {
-        return imageFile;
-    }
-
-    public void setImageFile(MultipartFile imageFile) {
-        this.imageFile = imageFile;
     }
 
     public String getDescription() {

@@ -31,12 +31,13 @@ public class QAController {
     StorageService storageService;
 
     @PostMapping("/question/create")
-    public ResponseEntity createQa(@RequestHeader("Authorization") String authorization, @RequestBody CreateQAModel createQaModel) {
+    public ResponseEntity createQa(@RequestHeader("Authorization") String authorization,
+                                   @RequestParam("image") MultipartFile imageFile, @RequestBody CreateQAModel createQaModel) {
         String id = new Token().verifyToken(authorization);
 
         Optional<User> user = authService.getUserById(id);
 
-        MultipartFile image = createQaModel.getImageFile();
+        MultipartFile image = imageFile;
         storageService.store(image);
 
         if (user.isPresent()) {

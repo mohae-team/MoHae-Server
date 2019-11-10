@@ -3,21 +3,12 @@ package com.mohaeyo.mohae.MoHaeServer.model.request.mypage;
 import org.springframework.web.multipart.MultipartFile;
 
 public class EditMyPageModel {
-    MultipartFile imageFile;
 
     String username;
 
     String address;
 
     String description;
-
-    public MultipartFile getImageFile() {
-        return imageFile;
-    }
-
-    public void setImageFile(MultipartFile imageFile) {
-        this.imageFile = imageFile;
-    }
 
     public String getUsername() {
         return username;

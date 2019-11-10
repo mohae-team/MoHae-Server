@@ -86,13 +86,14 @@ public class GroupController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity createGroup(@RequestHeader("Authorization") String authorization, @RequestBody CreateGroupModel createGroupModel) {
+    public ResponseEntity createGroup(@RequestHeader("Authorization") String authorization,
+                                      @RequestParam("image") MultipartFile imageFile, @RequestBody CreateGroupModel createGroupModel) {
         String id = new Token().verifyToken(authorization);
 
         List<String> peopleList = new ArrayList<>();
         peopleList.add(id);
 
-        MultipartFile image = createGroupModel.getImageFile();
+        MultipartFile image = imageFile;
         storageService.store(image);
 
         Group group = new Group(
