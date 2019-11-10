@@ -2,6 +2,7 @@ package com.mohaeyo.mohae.MoHaeServer.controller;
 
 import com.mohaeyo.mohae.MoHaeServer.exception.*;
 import com.mohaeyo.mohae.MoHaeServer.model.entity.Group;
+import com.mohaeyo.mohae.MoHaeServer.service.StorageService;
 import com.mohaeyo.mohae.MoHaeServer.service.auth.Token;
 import com.mohaeyo.mohae.MoHaeServer.model.entity.User;
 import com.mohaeyo.mohae.MoHaeServer.model.request.group.*;
@@ -11,6 +12,7 @@ import com.mohaeyo.mohae.MoHaeServer.service.group.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
 
@@ -22,6 +24,9 @@ public class GroupController {
 
     @Autowired
     AuthService authService;
+
+    @Autowired
+    StorageService storageService;
 
     @PostMapping("/join")
     public ResponseEntity joinGroup(@RequestHeader("Authorization") String authorization, @RequestBody JoinGroupModel joinGroupModel) {
@@ -87,6 +92,9 @@ public class GroupController {
         List<String> peopleList = new ArrayList<>();
         peopleList.add(id);
 
+        MultipartFile image = createGroupModel.getImageFile();
+        storageService.store(image);
+
         Group group = new Group(
                     new Object().hashCode(),
                     createGroupModel.getTitle(),
@@ -94,7 +102,7 @@ public class GroupController {
                     createGroupModel.getAddress(),
                     createGroupModel.getTerm(),
                     createGroupModel.getSummary(),
-                    createGroupModel.getImageByteList(),
+                "http://54.180.10.27:8080/" + "image/" + image.getOriginalFilename(),
                     createGroupModel.getDescription(),
                     createGroupModel.getMaxCount(),
                     peopleList

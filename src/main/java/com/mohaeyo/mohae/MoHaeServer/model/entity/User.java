@@ -13,17 +13,17 @@ public class User {
 
     String username;
 
-    List<Byte> imageByteList;
+    String imageUri;
 
     String address;
 
     String description;
 
-    public User(String id, String password, String username, List<Byte> imageByteList, String address, String description) {
+    public User(String id, String password, String username, String imageUri, String address, String description) {
         this.id = id;
         this.password = password;
         this.username = username;
-        this.imageByteList = imageByteList;
+        this.imageUri = imageUri;
         this.address = address;
         this.description = description;
     }
@@ -32,7 +32,7 @@ public class User {
         this.id = "";
         this.password = "";
         this.username = "";
-        this.imageByteList = Collections.emptyList();
+        this.imageUri = "";
         this.address = "";
         this.description = "";
     }
@@ -61,12 +61,12 @@ public class User {
         this.username = username;
     }
 
-    public List<Byte> getImageByteList() {
-        return imageByteList;
+    public String getImageUri() {
+        return imageUri;
     }
 
-    public void setImageByteList(List<Byte> imageByteList) {
-        this.imageByteList = imageByteList;
+    public void setImageUri(String imageUri) {
+        this.imageUri = imageUri;
     }
 
     public String getAddress() {

@@ -34,7 +34,7 @@ public class AuthController {
                     signUpModel.getId(),
                     signUpModel.getPassword(),
                     signUpModel.getUsername(),
-                    Collections.emptyList(),
+                    "",
                     signUpModel.getAddress(),
                     ""
             );

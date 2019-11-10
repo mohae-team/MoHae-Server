@@ -3,6 +3,7 @@ package com.mohaeyo.mohae.MoHaeServer.controller;
 import com.mohaeyo.mohae.MoHaeServer.exception.NotFoundException;
 import com.mohaeyo.mohae.MoHaeServer.model.entity.Feedback;
 import com.mohaeyo.mohae.MoHaeServer.model.entity.Place;
+import com.mohaeyo.mohae.MoHaeServer.service.StorageService;
 import com.mohaeyo.mohae.MoHaeServer.service.auth.Token;
 import com.mohaeyo.mohae.MoHaeServer.model.entity.User;
 import com.mohaeyo.mohae.MoHaeServer.model.request.feedback.CreateFeedbackModel;
@@ -15,6 +16,7 @@ import com.mohaeyo.mohae.MoHaeServer.service.place.PlaceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Collections;
 import java.util.List;
@@ -31,6 +33,9 @@ public class FeedbackController {
 
     @Autowired
     PlaceService placeService;
+
+    @Autowired
+    StorageService storageService;
 
     @PostMapping("/like")
     public ResponseEntity likeFeedback(@RequestHeader("Authorization") String authorization, @RequestBody LikeFeedbackModel likeFeedbackModel) {
@@ -106,13 +111,16 @@ public class FeedbackController {
         if (place.isPresent()) {
             String placeName = place.get().getPlaceName();
 
+            MultipartFile image = createFeedbackModel.getImageFile();
+            storageService.store(image);
+
             Feedback feedback = new Feedback(
                     new Object().hashCode(),
                     placeName,
                     createFeedbackModel.getLocation(),
                     createFeedbackModel.getAddress(),
                     createFeedbackModel.getSummary(),
-                    createFeedbackModel.getImageByteList(),
+                    "http://54.180.10.27:8080/" + "image/" + image.getOriginalFilename(),
                     createFeedbackModel.getDescription(),
                     Collections.emptyList(),
                     Collections.emptyList()

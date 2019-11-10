@@ -1,5 +1,7 @@
 package com.mohaeyo.mohae.MoHaeServer.model.request.qa;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import java.util.List;
 
 public class CreateQAModel {
@@ -8,7 +10,7 @@ public class CreateQAModel {
 
     String summary;
 
-    List<Byte> imageByteList;
+    MultipartFile imageFile;
 
     String description;
 
@@ -28,12 +30,12 @@ public class CreateQAModel {
         this.summary = summary;
     }
 
-    public List<Byte> getImageByteList() {
-        return imageByteList;
+    public MultipartFile getImageFile() {
+        return imageFile;
     }
 
-    public void setImageByteList(List<Byte> imageByteList) {
-        this.imageByteList = imageByteList;
+    public void setImageFile(MultipartFile imageFile) {
+        this.imageFile = imageFile;
     }
 
     public String getDescription() {

@@ -17,7 +17,7 @@ public class Feedback {
 
     String summary;
 
-    List<Byte> imageByteList;
+    String imageUri;
 
     String description;
 
@@ -25,14 +25,14 @@ public class Feedback {
 
     List<String> hatePeopleId;
 
-    public Feedback(int id, String placeName, String location, String address, String summary, List<Byte> imageByteList,
-                    String description, List<String> likePeopleId, List<String> hatePeopleId) {
+    public Feedback(int id, String placeName, String location, String address, String summary,
+                    String imageUri, String description, List<String> likePeopleId, List<String> hatePeopleId) {
         this.id = id;
         this.placeName = placeName;
         this.location = location;
         this.address = address;
         this.summary = summary;
-        this.imageByteList = imageByteList;
+        this.imageUri = imageUri;
         this.description = description;
         this.likePeopleId = likePeopleId;
         this.hatePeopleId = hatePeopleId;
@@ -44,7 +44,7 @@ public class Feedback {
         this.location = "";
         this.address = "";
         this.summary = "";
-        this.imageByteList = Collections.emptyList();
+        this.imageUri = "";
         this.description = "";
         this.likePeopleId = Collections.emptyList();
         this.hatePeopleId = Collections.emptyList();
@@ -90,12 +90,12 @@ public class Feedback {
         this.summary = summary;
     }
 
-    public List<Byte> getImageByteList() {
-        return imageByteList;
+    public String getImageUri() {
+        return imageUri;
     }
 
-    public void setImageByteList(List<Byte> imageByteList) {
-        this.imageByteList = imageByteList;
+    public void setImageUri(String imageUri) {
+        this.imageUri = imageUri;
     }
 
     public List<String> getLikePeopleId() {

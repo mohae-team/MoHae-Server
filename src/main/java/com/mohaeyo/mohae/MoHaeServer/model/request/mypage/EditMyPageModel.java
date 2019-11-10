@@ -1,9 +1,9 @@
 package com.mohaeyo.mohae.MoHaeServer.model.request.mypage;
 
-import java.util.List;
+import org.springframework.web.multipart.MultipartFile;
 
 public class EditMyPageModel {
-    List<Byte> imageByteList;
+    MultipartFile imageFile;
 
     String username;
 
@@ -11,12 +11,12 @@ public class EditMyPageModel {
 
     String description;
 
-    public List<Byte> getImageByteList() {
-        return imageByteList;
+    public MultipartFile getImageFile() {
+        return imageFile;
     }
 
-    public void setImageByteList(List<Byte> imageByteList) {
-        this.imageByteList = imageByteList;
+    public void setImageFile(MultipartFile imageFile) {
+        this.imageFile = imageFile;
     }
 
     public String getUsername() {

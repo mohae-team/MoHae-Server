@@ -19,7 +19,7 @@ public class Group {
 
     String summary;
 
-    List<Byte> imageByteList;
+    String imageUri;
 
     String description;
 
@@ -28,14 +28,14 @@ public class Group {
     List<String> peopleId;
 
     public Group(int id, String title, String location, String address, String term, String summary,
-                 List<Byte> imageByteList, String description, int maxCount, List<String> peopleId) {
+                 String imageUri, String description, int maxCount, List<String> peopleId) {
         this.id = id;
         this.title = title;
         this.location = location;
         this.address = address;
         this.term = term;
         this.summary = summary;
-        this.imageByteList = imageByteList;
+        this.imageUri = imageUri;
         this.description = description;
         this.maxCount = maxCount;
         this.peopleId = peopleId;
@@ -48,7 +48,7 @@ public class Group {
         this.address = "";
         this.term = "";
         this.summary = "";
-        this.imageByteList = Collections.emptyList();
+        this.imageUri = "";
         this.description = "";
         this.maxCount = 0;
         this.peopleId = Collections.emptyList();
@@ -102,12 +102,12 @@ public class Group {
         this.summary = summary;
     }
 
-    public List<Byte> getImageByteList() {
-        return imageByteList;
+    public String getImageUri() {
+        return imageUri;
     }
 
-    public void setImageByteList(List<Byte> imageByteList) {
-        this.imageByteList = imageByteList;
+    public void setImageUri(String imageUri) {
+        this.imageUri = imageUri;
     }
 
     public String getDescription() {

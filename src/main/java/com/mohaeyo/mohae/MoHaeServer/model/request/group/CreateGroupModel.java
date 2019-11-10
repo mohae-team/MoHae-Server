@@ -1,5 +1,7 @@
 package com.mohaeyo.mohae.MoHaeServer.model.request.group;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import java.util.List;
 
 public class CreateGroupModel {
@@ -9,7 +11,7 @@ public class CreateGroupModel {
     String term;
     String summary;
     int maxCount;
-    List<Byte> imageByteList;
+    MultipartFile imageFile;
     String description;
 
     public String getTitle() {
@@ -44,12 +46,12 @@ public class CreateGroupModel {
         this.summary = summary;
     }
 
-    public List<Byte> getImageByteList() {
-        return imageByteList;
+    public MultipartFile getImageFile() {
+        return imageFile;
     }
 
-    public void setImageByteList(List<Byte> imageByteList) {
-        this.imageByteList = imageByteList;
+    public void setImageFile(MultipartFile imageFile) {
+        this.imageFile = imageFile;
     }
 
     public int getMaxCount() {

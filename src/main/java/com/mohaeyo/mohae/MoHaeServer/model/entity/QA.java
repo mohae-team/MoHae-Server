@@ -17,20 +17,19 @@ public class QA {
 
     String summary;
 
-    List<Byte> imageByteList;
+    String imageUri;
 
     String description;
 
     List<Answer> answerList;
 
-    public QA(int postId, String title, String username, String address, String summary, List<Byte> imageByteList,
-              String description, List<Answer> answerList) {
+    public QA(int postId, String title, String username, String address, String summary, String imageUri, String description, List<Answer> answerList) {
         this.postId = postId;
         this.title = title;
         this.username = username;
         this.address = address;
         this.summary = summary;
-        this.imageByteList = imageByteList;
+        this.imageUri = imageUri;
         this.description = description;
         this.answerList = answerList;
     }
@@ -41,7 +40,7 @@ public class QA {
         this.username = "";
         this.address = "";
         this.summary = "";
-        this.imageByteList = Collections.emptyList();
+        this.imageUri = "";
         this.description = "";
         this.answerList = Collections.emptyList();
     }
@@ -86,12 +85,12 @@ public class QA {
         this.address = address;
     }
 
-    public List<Byte> getImageByteList() {
-        return imageByteList;
+    public String getImageUri() {
+        return imageUri;
     }
 
-    public void setImageByteList(List<Byte> imageByteList) {
-        this.imageByteList = imageByteList;
+    public void setImageUri(String imageUri) {
+        this.imageUri = imageUri;
     }
 
     public String getDescription() {
