@@ -14,6 +14,16 @@ public class CreateFeedbackModel {
 
     String description;
 
+    MultipartFile imageFile;
+
+    public MultipartFile getImageFile() {
+        return imageFile;
+    }
+
+    public void setImageFile(MultipartFile imageFile) {
+        this.imageFile = imageFile;
+    }
+
     public String getLocation() {
         return location;
     }

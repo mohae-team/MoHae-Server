@@ -32,12 +32,12 @@ public class QAController {
 
     @PostMapping("/question/create")
     public ResponseEntity createQa(@RequestHeader("Authorization") String authorization,
-                                   @RequestParam MultipartFile imageFile, @ModelAttribute CreateQAModel createQaModel) {
+                                   @ModelAttribute CreateQAModel createQaModel) {
         String id = new Token().verifyToken(authorization);
 
         Optional<User> user = authService.getUserById(id);
 
-        MultipartFile image = imageFile;
+        MultipartFile image = createQaModel.getImageFile();
         storageService.store(image);
 
         if (user.isPresent()) {

@@ -107,13 +107,12 @@ public class FeedbackController {
 
     @PostMapping("/create")
     public ResponseEntity createFeedback(
-            @RequestParam MultipartFile imageFile,
             @ModelAttribute CreateFeedbackModel createFeedbackModel) {
         Optional<Place> place = placeService.findPlace(createFeedbackModel.getLocation());
         if (place.isPresent()) {
             String placeName = place.get().getPlaceName();
 
-            MultipartFile image = imageFile;
+            MultipartFile image = createFeedbackModel.getImageFile();
             storageService.store(image);
 
             Feedback feedback = new Feedback(

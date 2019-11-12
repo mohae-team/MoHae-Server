@@ -10,6 +10,16 @@ public class EditMyPageModel {
 
     String description;
 
+    MultipartFile imageFile;
+
+    public MultipartFile getImageFile() {
+        return imageFile;
+    }
+
+    public void setImageFile(MultipartFile imageFile) {
+        this.imageFile = imageFile;
+    }
+
     public String getUsername() {
         return username;
     }
