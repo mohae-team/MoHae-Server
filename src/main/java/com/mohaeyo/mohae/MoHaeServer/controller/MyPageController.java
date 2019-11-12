@@ -28,8 +28,8 @@ public class MyPageController {
     @RequestMapping(path = "/edit", method = RequestMethod.POST,
             consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity editProfile(@RequestHeader("Authorization") String authorization,
-                                      @RequestParam("image") MultipartFile imageFile,
-                                      @RequestBody EditMyPageModel editMyPageModel) {
+                                      @RequestParam MultipartFile imageFile,
+                                      @ModelAttribute EditMyPageModel editMyPageModel) {
         Optional<User> user = authService.getUserById(
                 new Token().verifyToken(authorization));
 

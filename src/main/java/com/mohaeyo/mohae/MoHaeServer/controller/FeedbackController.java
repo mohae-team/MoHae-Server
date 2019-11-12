@@ -107,8 +107,8 @@ public class FeedbackController {
 
     @PostMapping("/create")
     public ResponseEntity createFeedback(
-            @RequestParam("image") MultipartFile imageFile,
-            @RequestBody CreateFeedbackModel createFeedbackModel) {
+            @RequestParam MultipartFile imageFile,
+            @ModelAttribute CreateFeedbackModel createFeedbackModel) {
         Optional<Place> place = placeService.findPlace(createFeedbackModel.getLocation());
         if (place.isPresent()) {
             String placeName = place.get().getPlaceName();

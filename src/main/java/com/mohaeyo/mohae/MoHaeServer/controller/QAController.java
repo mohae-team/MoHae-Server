@@ -32,7 +32,7 @@ public class QAController {
 
     @PostMapping("/question/create")
     public ResponseEntity createQa(@RequestHeader("Authorization") String authorization,
-                                   @RequestParam("image") MultipartFile imageFile, @RequestBody CreateQAModel createQaModel) {
+                                   @RequestParam MultipartFile imageFile, @ModelAttribute CreateQAModel createQaModel) {
         String id = new Token().verifyToken(authorization);
 
         Optional<User> user = authService.getUserById(id);
@@ -61,7 +61,7 @@ public class QAController {
     }
 
     @PostMapping("/answer/create")
-    public ResponseEntity createAnswer(@RequestHeader("Authorization") String authorization, @RequestBody CreateAnswerModel createAnswerModel) {
+    public ResponseEntity createAnswer(@RequestHeader("Authorization") String authorization, @ModelAttribute CreateAnswerModel createAnswerModel) {
         String id = new Token().verifyToken(authorization);
 
         Optional<User> user = authService.getUserById(id);
