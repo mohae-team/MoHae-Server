@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,13 +17,10 @@ public class ImageController {
     @Autowired
     ResourceLoader resourceLoader;
 
-    @Autowired
-    StorageService storageService;
+    private final String UPLOAD_ROOT = "src/main/resources/";
 
-    @GetMapping("/image/{imageUri:.+}")
-    public ResponseEntity getImage(@PathVariable String filename) {
-        Resource file = storageService.loadAsResource(filename);
-        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
-                "attachment; filename=\"" + file.getFilename() + "\"").body(file);
+    @GetMapping(value = "/image/{imageUri}", produces = MediaType.IMAGE_PNG_VALUE)
+    public ResponseEntity getImage(@PathVariable("imageUri") String filename) {
+        return ResponseEntity.ok(resourceLoader.getResource("file:" + UPLOAD_ROOT + filename));
     }
 }

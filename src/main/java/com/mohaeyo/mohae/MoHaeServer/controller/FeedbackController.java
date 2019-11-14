@@ -6,7 +6,6 @@ import com.mohaeyo.mohae.MoHaeServer.model.entity.Place;
 import com.mohaeyo.mohae.MoHaeServer.service.StorageService;
 import com.mohaeyo.mohae.MoHaeServer.service.auth.Token;
 import com.mohaeyo.mohae.MoHaeServer.model.entity.User;
-import com.mohaeyo.mohae.MoHaeServer.model.request.feedback.CreateFeedbackModel;
 import com.mohaeyo.mohae.MoHaeServer.model.request.feedback.GetFeedbackModel;
 import com.mohaeyo.mohae.MoHaeServer.model.request.feedback.LikeFeedbackModel;
 import com.mohaeyo.mohae.MoHaeServer.model.response.ResponseFeedbackModel;
@@ -106,23 +105,26 @@ public class FeedbackController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity createFeedback(
-            @ModelAttribute CreateFeedbackModel createFeedbackModel) {
-        Optional<Place> place = placeService.findPlace(createFeedbackModel.getLocation());
+    public ResponseEntity createFeedback(@RequestParam("location") String location,
+                                         @RequestParam("address") String address,
+                                         @RequestParam("summary") String summary,
+                                         @RequestParam("description") String description,
+                                         @RequestParam("imageFile") MultipartFile imageFile) {
+        Optional<Place> place = placeService.findPlace(location);
         if (place.isPresent()) {
             String placeName = place.get().getPlaceName();
 
-            MultipartFile image = createFeedbackModel.getImageFile();
+            MultipartFile image = imageFile;
             storageService.store(image);
 
             Feedback feedback = new Feedback(
                     new Object().hashCode(),
                     placeName,
-                    createFeedbackModel.getLocation(),
-                    createFeedbackModel.getAddress(),
-                    createFeedbackModel.getSummary(),
+                    location,
+                    address,
+                    summary,
                     "http://54.180.10.27:8080/" + "image/" + image.getOriginalFilename(),
-                    createFeedbackModel.getDescription(),
+                    description,
                     Collections.emptyList(),
                     Collections.emptyList()
             );

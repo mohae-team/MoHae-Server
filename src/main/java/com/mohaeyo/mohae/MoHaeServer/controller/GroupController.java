@@ -87,25 +87,32 @@ public class GroupController {
 
     @PostMapping("/create")
     public ResponseEntity createGroup(@RequestHeader("Authorization") String authorization,
-                                      @ModelAttribute CreateGroupModel createGroupModel) {
+                                      @RequestParam("title") String title,
+                                      @RequestParam("location") String location,
+                                      @RequestParam("address") String address,
+                                      @RequestParam("term") String term,
+                                      @RequestParam("summary") String summary,
+                                      @RequestParam("maxCount") int maxCount,
+                                      @RequestParam("description") String description,
+                                      @RequestParam("imageFile") MultipartFile imageFile) {
         String id = new Token().verifyToken(authorization);
 
         List<String> peopleList = new ArrayList<>();
         peopleList.add(id);
 
-        MultipartFile image = createGroupModel.getImageFile();
+        MultipartFile image = imageFile;
         storageService.store(image);
 
         Group group = new Group(
                     new Object().hashCode(),
-                    createGroupModel.getTitle(),
-                    createGroupModel.getLocation(),
-                    createGroupModel.getAddress(),
-                    createGroupModel.getTerm(),
-                    createGroupModel.getSummary(),
+                    title,
+                    location,
+                    address,
+                    term,
+                    summary,
                 "http://54.180.10.27:8080/" + "image/" + image.getOriginalFilename(),
-                    createGroupModel.getDescription(),
-                    createGroupModel.getMaxCount(),
+                    description,
+                    maxCount,
                     peopleList
                 );
 
