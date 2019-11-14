@@ -123,7 +123,7 @@ public class FeedbackController {
                     location,
                     address,
                     summary,
-                    "http://54.180.10.27:8080/" + "image/" + image.getOriginalFilename(),
+                    "http://54.180.10.27:8080/mohae/image/" + image.getOriginalFilename(),
                     description,
                     Collections.emptyList(),
                     Collections.emptyList()

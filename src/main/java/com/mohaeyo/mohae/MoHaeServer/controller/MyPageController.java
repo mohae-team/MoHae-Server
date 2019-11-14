@@ -38,7 +38,7 @@ public class MyPageController {
         if (user.isPresent()) {
             user.get().setUsername(username);
             user.get().setAddress(address);
-            user.get().setImageUri("http://54.180.10.27:8080/image/" + imageFile.getOriginalFilename());
+            user.get().setImageUri("http://54.180.10.27:8080/mohae/image/" + imageFile.getOriginalFilename());
             user.get().setDescription(description);
 
             authService.saveUser(user.get());
