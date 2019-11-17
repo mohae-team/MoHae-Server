@@ -32,26 +32,23 @@ public class QAController {
 
     @PostMapping("/question/create")
     public ResponseEntity createQa(@RequestHeader("Authorization") String authorization,
-                                   @RequestParam("title") String title,
-                                   @RequestParam("summary") String summary,
-                                   @RequestParam("description") String description,
-                                   @RequestParam("imageFile") MultipartFile imageFile) {
+                                   @ModelAttribute CreateQAModel body) {
         String id = new Token().verifyToken(authorization);
 
         Optional<User> user = authService.getUserById(id);
 
-        MultipartFile image = imageFile;
+        MultipartFile image = body.getImageFile();
         storageService.store(image);
 
         if (user.isPresent()) {
             QA qa = new QA(
                         new Object().hashCode(),
-                        title,
+                        body.getTitle(),
                         user.get().getUsername(),
                         user.get().getAddress(),
-                        summary,
+                        body.getSummary(),
                     "http://54.180.10.27:8080/mohae/image/" + image.getOriginalFilename(),
-                        description,
+                        body.getDescription(),
                         Collections.emptyList()
                     );
 
@@ -64,7 +61,7 @@ public class QAController {
     }
 
     @PostMapping("/answer/create")
-    public ResponseEntity createAnswer(@RequestHeader("Authorization") String authorization, @ModelAttribute CreateAnswerModel createAnswerModel) {
+    public ResponseEntity createAnswer(@RequestHeader("Authorization") String authorization, @RequestBody CreateAnswerModel createAnswerModel) {
         String id = new Token().verifyToken(authorization);
 
         Optional<User> user = authService.getUserById(id);

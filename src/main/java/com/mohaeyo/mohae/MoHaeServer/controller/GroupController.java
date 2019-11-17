@@ -29,7 +29,8 @@ public class GroupController {
     StorageService storageService;
 
     @PostMapping("/join")
-    public ResponseEntity joinGroup(@RequestHeader("Authorization") String authorization, @RequestBody JoinGroupModel joinGroupModel) {
+    public ResponseEntity joinGroup(@RequestHeader("Authorization") String authorization,
+                                    @RequestBody JoinGroupModel joinGroupModel) {
         int postId = joinGroupModel.getId();
 
         String id = new Token().verifyToken(authorization);
@@ -57,7 +58,8 @@ public class GroupController {
     }
 
     @DeleteMapping("/cancel")
-    public ResponseEntity cancelGroup(@RequestHeader("Authorization") String authorization, @RequestBody CancelGroupModel cancelGroupModel) {
+    public ResponseEntity cancelGroup(@RequestHeader("Authorization") String authorization,
+                                      @RequestBody CancelGroupModel cancelGroupModel) {
         int postId = cancelGroupModel.getId();
 
         String id = new Token().verifyToken(authorization);
@@ -87,32 +89,25 @@ public class GroupController {
 
     @PostMapping("/create")
     public ResponseEntity createGroup(@RequestHeader("Authorization") String authorization,
-                                      @RequestParam("title") String title,
-                                      @RequestParam("location") String location,
-                                      @RequestParam("address") String address,
-                                      @RequestParam("term") String term,
-                                      @RequestParam("summary") String summary,
-                                      @RequestParam("maxCount") int maxCount,
-                                      @RequestParam("description") String description,
-                                      @RequestParam("imageFile") MultipartFile imageFile) {
+                                      @ModelAttribute CreateGroupModel body) {
         String id = new Token().verifyToken(authorization);
 
         List<String> peopleList = new ArrayList<>();
         peopleList.add(id);
 
-        MultipartFile image = imageFile;
+        MultipartFile image = body.getImageFile();
         storageService.store(image);
 
         Group group = new Group(
                     new Object().hashCode(),
-                    title,
-                    location,
-                    address,
-                    term,
-                    summary,
+                    body.getTitle(),
+                    body.getLocation(),
+                    body.getAddress(),
+                    body.getTerm(),
+                    body.getSummary(),
                 "http://54.180.10.27:8080/mohae/image/" + image.getOriginalFilename(),
-                    description,
-                    maxCount,
+                    body.getDescription(),
+                    body.getMaxCount(),
                     peopleList
                 );
 

@@ -3,6 +3,7 @@ package com.mohaeyo.mohae.MoHaeServer.controller;
 import com.mohaeyo.mohae.MoHaeServer.exception.NotFoundException;
 import com.mohaeyo.mohae.MoHaeServer.model.entity.Feedback;
 import com.mohaeyo.mohae.MoHaeServer.model.entity.Place;
+import com.mohaeyo.mohae.MoHaeServer.model.request.feedback.CreateFeedbackModel;
 import com.mohaeyo.mohae.MoHaeServer.service.StorageService;
 import com.mohaeyo.mohae.MoHaeServer.service.auth.Token;
 import com.mohaeyo.mohae.MoHaeServer.model.entity.User;
@@ -105,26 +106,22 @@ public class FeedbackController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity createFeedback(@RequestParam("location") String location,
-                                         @RequestParam("address") String address,
-                                         @RequestParam("summary") String summary,
-                                         @RequestParam("description") String description,
-                                         @RequestParam("imageFile") MultipartFile imageFile) {
-        Optional<Place> place = placeService.findPlace(location);
+    public ResponseEntity createFeedback(@ModelAttribute CreateFeedbackModel body) {
+        Optional<Place> place = placeService.findPlace(body.getLocation());
         if (place.isPresent()) {
             String placeName = place.get().getPlaceName();
 
-            MultipartFile image = imageFile;
+            MultipartFile image = body.getImageFile();
             storageService.store(image);
 
             Feedback feedback = new Feedback(
                     new Object().hashCode(),
                     placeName,
-                    location,
-                    address,
-                    summary,
+                    body.getLocation(),
+                    body.getAddress(),
+                    body.getSummary(),
                     "http://54.180.10.27:8080/mohae/image/" + image.getOriginalFilename(),
-                    description,
+                    body.getDescription(),
                     Collections.emptyList(),
                     Collections.emptyList()
             );
