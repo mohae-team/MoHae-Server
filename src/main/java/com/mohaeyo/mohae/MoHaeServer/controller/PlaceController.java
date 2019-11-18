@@ -89,7 +89,10 @@ public class PlaceController {
             Optional<User> user = authService.getUserById(new Token().verifyToken(authorization));
             if (user.isPresent()) {
                 if (place.get().getLikePeople().contains(user.get().getId())) {
-                    place.get().getLikePeople().add(user.get().getId());
+                    
+                    List likePeopleList = place.get().getLikePeople();
+                    likePeopleList.remove(user.get().getId());
+                    place.get().setLikePeople(likePeopleList);
 
                     placeService.savePlace(place.get());
 
