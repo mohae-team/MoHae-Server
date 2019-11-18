@@ -27,20 +27,30 @@ public class PlaceController {
     @Autowired
     AuthService authService;
 
-    @GetMapping("/get")
-    public ResponseEntity getPlace(@RequestHeader("Authorization") String authorization, @RequestBody GetPlaceModel getPlaceModel) {
-        Optional<Place> place = placeService.findPlace(getPlaceModel.getLocation());
+    @GetMapping("/get/{location}")
+    public ResponseEntity getPlace(@RequestHeader("Authorization") String authorization, @PathVariable("location") String location) {
+        Optional<Place> place = placeService.findPlace(location);
         if (place.isPresent()) {
             Optional<User> user = authService.getUserById(new Token().verifyToken(authorization));
             if (user.isPresent()) {
 
-                return ResponseEntity.ok(
-                        new ResponsePlaceModel(
-                                place.get().getPlaceName(),
-                                place.get().getLocation(),
-                                place.get().getDescription(),
-                                place.get().getLikePeople().size(),
-                                place.get().getLikePeople().contains(user.get().getId())));
+                if (place.get().getLikePeople().isEmpty()) {
+                    return ResponseEntity.ok(
+                            new ResponsePlaceModel(
+                                    place.get().getPlaceName(),
+                                    place.get().getLocation(),
+                                    place.get().getDescription(),
+                                    0,
+                                    false));
+                } else {
+                    return ResponseEntity.ok(
+                            new ResponsePlaceModel(
+                                    place.get().getPlaceName(),
+                                    place.get().getLocation(),
+                                    place.get().getDescription(),
+                                    place.get().getLikePeople().size(),
+                                    place.get().getLikePeople().contains(user.get().getId())));
+                }
             } else {
                 throw new NotFoundException("Id Not Found");
             }
@@ -83,13 +93,13 @@ public class PlaceController {
 
     @PostMapping("/dislike")
     public ResponseEntity postDisLikePlace(@RequestHeader("Authorization") String authorization,
-                                        @RequestBody GetPlaceModel getPlaceModel) {
+                                           @RequestBody GetPlaceModel getPlaceModel) {
         Optional<Place> place = placeService.findPlace(getPlaceModel.getLocation());
         if (place.isPresent()) {
             Optional<User> user = authService.getUserById(new Token().verifyToken(authorization));
             if (user.isPresent()) {
                 if (place.get().getLikePeople().contains(user.get().getId())) {
-                    
+
                     List likePeopleList = place.get().getLikePeople();
                     likePeopleList.remove(user.get().getId());
                     place.get().setLikePeople(likePeopleList);
@@ -115,19 +125,31 @@ public class PlaceController {
     }
 
     @PostMapping("/post")
-    public ResponseEntity postPlace(@RequestBody PostPlaceModel postPlaceModel) {
+    public ResponseEntity postPlace(@RequestHeader("Authorization") String authorization,
+                                    @RequestBody PostPlaceModel postPlaceModel) {
         Optional<Place> place = placeService.findPlace(postPlaceModel.getLocation());
         if (place.isPresent()) {
-            place.get().setDescription(
-                    place.get().getDescription() + "\n" + postPlaceModel.getDescription()
-            );
-            placeService.savePlace(place.get());
+            Optional<User> user = authService.getUserById(new Token().verifyToken(authorization));
 
-            return ResponseEntity.ok(place.get());
+            if (user.isPresent()) {
+                place.get().setDescription(
+                        place.get().getDescription() + "\n" + postPlaceModel.getDescription()
+                );
+                placeService.savePlace(place.get());
+
+                return ResponseEntity.ok(new ResponsePlaceModel(
+                        place.get().getPlaceName(),
+                        place.get().getLocation(),
+                        place.get().getDescription(),
+                        place.get().getLikePeople().size(),
+                        place.get().getLikePeople().contains(user.get().getId())));
+            } else {
+                throw new NotFoundException("Id Not Found");
+            }
         } else {
             Place newPlace = new Place(
-                    postPlaceModel.getLocation(),
                     postPlaceModel.getPlaceName(),
+                    postPlaceModel.getLocation(),
                     postPlaceModel.getDescription(),
                     Collections.emptyList()
             );
@@ -139,7 +161,7 @@ public class PlaceController {
                             newPlace.getPlaceName(),
                             newPlace.getLocation(),
                             newPlace.getDescription(),
-                            place.get().getLikePeople().size(),
+                            0,
                             false));
         }
     }

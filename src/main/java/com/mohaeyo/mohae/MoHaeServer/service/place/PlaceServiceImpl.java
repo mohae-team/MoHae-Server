@@ -14,7 +14,7 @@ public class PlaceServiceImpl implements PlaceService {
 
     @Override
     public Optional<Place> findPlace(String location) {
-        return Optional.empty();
+        return placeRepository.findById(location);
     }
 
     @Override

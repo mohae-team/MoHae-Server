@@ -8,9 +8,9 @@ import java.util.List;
 @Document(collection = "place")
 public class Place {
 
-    String placeName;
+    String id;
 
-    String location;
+    String placeName;
 
     String description;
 
@@ -18,14 +18,14 @@ public class Place {
 
     public Place(String placeName, String location, String description, List<String> likePeople) {
         this.placeName = placeName;
-        this.location = location;
+        this.id = location;
         this.description = description;
         this.likePeople = likePeople;
     }
 
     public Place() {
         this.placeName = "";
-        this.location = "";
+        this.id = "";
         this.description = "";
         this.likePeople = Collections.emptyList();
     }
@@ -39,11 +39,11 @@ public class Place {
     }
 
     public String getLocation() {
-        return location;
+        return id;
     }
 
     public void setLocation(String location) {
-        this.location = location;
+        this.id = location;
     }
 
     public String getDescription() {

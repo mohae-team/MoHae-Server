@@ -55,7 +55,7 @@ public class ResponsePlaceModel {
         return isLike;
     }
 
-    public void setLike(boolean like) {
-        isLike = like;
+    public void setLike(boolean isLike) {
+        this.isLike = isLike;
     }
 }
