@@ -39,6 +39,7 @@ public class PlaceController {
                                 place.get().getPlaceName(),
                                 place.get().getLocation(),
                                 place.get().getDescription(),
+                                place.get().getLikePeople().size(),
                                 place.get().getLikePeople().contains(user.get().getId())));
             } else {
                 throw new NotFoundException("Id Not Found");
@@ -67,6 +68,7 @@ public class PlaceController {
                                     place.get().getPlaceName(),
                                     place.get().getLocation(),
                                     place.get().getDescription(),
+                                    place.get().getLikePeople().size(),
                                     place.get().getLikePeople().contains(user.get().getId())));
                 } else {
                     throw new AlreadyExistException("Already like");
@@ -96,6 +98,7 @@ public class PlaceController {
                                     place.get().getPlaceName(),
                                     place.get().getLocation(),
                                     place.get().getDescription(),
+                                    place.get().getLikePeople().size(),
                                     place.get().getLikePeople().contains(user.get().getId())));
                 } else {
                     throw new AlreadyExistException("Already dislike");
@@ -133,6 +136,7 @@ public class PlaceController {
                             newPlace.getPlaceName(),
                             newPlace.getLocation(),
                             newPlace.getDescription(),
+                            place.get().getLikePeople().size(),
                             false));
         }
     }

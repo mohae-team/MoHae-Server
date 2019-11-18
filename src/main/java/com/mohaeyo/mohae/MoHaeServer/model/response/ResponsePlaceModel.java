@@ -7,12 +7,15 @@ public class ResponsePlaceModel {
 
     String description;
 
+    int likeCount;
+
     boolean isLike;
 
-    public ResponsePlaceModel(String placeName, String location, String description, boolean isLike) {
+    public ResponsePlaceModel(String placeName, String location, String description, int likeCount, boolean isLike) {
         this.placeName = placeName;
         this.location = location;
         this.description = description;
+        this.likeCount = likeCount;
         this.isLike = isLike;
     }
 
@@ -40,7 +43,15 @@ public class ResponsePlaceModel {
         this.description = description;
     }
 
-    public boolean getLike() {
+    public int getLikeCount() {
+        return likeCount;
+    }
+
+    public void setLikeCount(int likeCount) {
+        this.likeCount = likeCount;
+    }
+
+    public boolean isLike() {
         return isLike;
     }
 
