@@ -57,20 +57,28 @@ public class FeedbackController {
                 likeList.add(id);
                 feedback.get().setLikePeopleId(likeList);
                 feedbackService.saveFeedback(feedback.get());
-
-                return ResponseEntity.ok(feedback.get());
             } else {
                 feedbackService.removeFeedback(feedback.get());
 
                 Optional<Place> place = placeService.findPlace(feedback.get().getLocation());
                 if (place.isPresent()) {
                     placeService.removePlace(place.get());
-
-                    return ResponseEntity.ok(feedback.get());
                 } else {
                     throw new NotFoundException("Place Not Found");
                 }
             }
+            return ResponseEntity.ok(new ResponseFeedbackModel(
+                    feedback.get().getId(),
+                    feedback.get().getPlaceName(),
+                    feedback.get().getLocation(),
+                    feedback.get().getAddress(),
+                    feedback.get().getSummary(),
+                    feedback.get().getImageUri(),
+                    feedback.get().getDescription(),
+                    feedback.get().getLikePeopleId().size(),
+                    feedback.get().getHatePeopleId().size(),
+                    true,
+                    false));
         } else {
             throw new NotFoundException("Id Not Found");
         }
@@ -99,7 +107,18 @@ public class FeedbackController {
             } else {
                 feedbackService.removeFeedback(feedback.get());
             }
-            return ResponseEntity.ok(feedback.get());
+            return ResponseEntity.ok(new ResponseFeedbackModel(
+                    feedback.get().getId(),
+                    feedback.get().getPlaceName(),
+                    feedback.get().getLocation(),
+                    feedback.get().getAddress(),
+                    feedback.get().getSummary(),
+                    feedback.get().getImageUri(),
+                    feedback.get().getDescription(),
+                    feedback.get().getLikePeopleId().size(),
+                    feedback.get().getHatePeopleId().size(),
+                    false,
+                    true));
         } else {
             throw new NotFoundException("Id Not Found");
         }
@@ -128,7 +147,18 @@ public class FeedbackController {
 
             feedbackService.insertFeedback(feedback);
 
-            return ResponseEntity.ok(feedback);
+            return ResponseEntity.ok(new ResponseFeedbackModel(
+                    feedback.getId(),
+                    feedback.getPlaceName(),
+                    feedback.getLocation(),
+                    feedback.getAddress(),
+                    feedback.getSummary(),
+                    feedback.getImageUri(),
+                    feedback.getDescription(),
+                    feedback.getLikePeopleId().size(),
+                    feedback.getHatePeopleId().size(),
+                    false,
+                    false));
         } else {
             throw new NotFoundException("Location Not Found");
         }
@@ -141,7 +171,20 @@ public class FeedbackController {
 
         if (user.isPresent()) {
             return ResponseEntity.ok(
-                    feedbackService.findAddressAllFeedback(user.get().getAddress())
+                    feedbackService.findAddressAllFeedback(user.get().getAddress()).stream()
+                            .map(
+                                    feedback -> new ResponseFeedbackModel(
+                                            feedback.getId(),
+                                            feedback.getPlaceName(),
+                                            feedback.getLocation(),
+                                            feedback.getAddress(),
+                                            feedback.getSummary(),
+                                            feedback.getImageUri(),
+                                            feedback.getDescription(),
+                                            feedback.getLikePeopleId().size(),
+                                            feedback.getHatePeopleId().size(),
+                                            true,
+                                            false)).toArray()
             );
         } else {
             throw new NotFoundException("Id Not Found");
@@ -155,11 +198,44 @@ public class FeedbackController {
             List<String> likePeopleId = feedback.get().getLikePeopleId();
             List<String> hatePeopleId = feedback.get().getHatePeopleId();
             if (likePeopleId.contains(new Token().verifyToken(token))) {
-                return ResponseEntity.ok(new ResponseFeedbackModel(feedback.get(), true, false));
+                return ResponseEntity.ok(new ResponseFeedbackModel(
+                        feedback.get().getId(),
+                        feedback.get().getPlaceName(),
+                        feedback.get().getLocation(),
+                        feedback.get().getAddress(),
+                        feedback.get().getSummary(),
+                        feedback.get().getImageUri(),
+                        feedback.get().getDescription(),
+                        feedback.get().getLikePeopleId().size(),
+                        feedback.get().getHatePeopleId().size(),
+                        true,
+                        false));
             } else if (hatePeopleId.contains(new Token().verifyToken(token))) {
-                return ResponseEntity.ok(new ResponseFeedbackModel(feedback.get(), false, true));
+                return ResponseEntity.ok(new ResponseFeedbackModel(
+                        feedback.get().getId(),
+                        feedback.get().getPlaceName(),
+                        feedback.get().getLocation(),
+                        feedback.get().getAddress(),
+                        feedback.get().getSummary(),
+                        feedback.get().getImageUri(),
+                        feedback.get().getDescription(),
+                        feedback.get().getLikePeopleId().size(),
+                        feedback.get().getHatePeopleId().size(),
+                        false,
+                        true));
             } else {
-                return ResponseEntity.ok(new ResponseFeedbackModel(feedback.get(), false, false));
+                return ResponseEntity.ok(new ResponseFeedbackModel(
+                        feedback.get().getId(),
+                        feedback.get().getPlaceName(),
+                        feedback.get().getLocation(),
+                        feedback.get().getAddress(),
+                        feedback.get().getSummary(),
+                        feedback.get().getImageUri(),
+                        feedback.get().getDescription(),
+                        feedback.get().getLikePeopleId().size(),
+                        feedback.get().getHatePeopleId().size(),
+                        false,
+                        false));
             }
         } else {
             throw new NotFoundException("postId Not Found");

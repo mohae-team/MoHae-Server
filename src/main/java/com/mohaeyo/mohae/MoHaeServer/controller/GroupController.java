@@ -47,7 +47,18 @@ public class GroupController {
                     list.add(id);
                     group.get().setPeopleId(list);
                     groupService.saveGroup(group.get());
-                    return ResponseEntity.ok(group.get());
+                    return ResponseEntity.ok(new ResponseGroupModel(
+                            group.get().getId(),
+                            group.get().getTitle(),
+                            group.get().getLocation(),
+                            group.get().getAddress(),
+                            group.get().getTerm(),
+                            group.get().getSummary(),
+                            group.get().getImageUri(),
+                            group.get().getDescription(),
+                            group.get().getMaxCount(),
+                            group.get().getPeopleId().size(),
+                            true));
                 }
             } else {
                 throw new ResetContentException("People max");
@@ -74,10 +85,32 @@ public class GroupController {
                     list.remove(id);
                     group.get().setPeopleId(list);
                     groupService.saveGroup(group.get());
-                    return ResponseEntity.ok(group.get());
+                    return ResponseEntity.ok(new ResponseGroupModel(
+                            group.get().getId(),
+                            group.get().getTitle(),
+                            group.get().getLocation(),
+                            group.get().getAddress(),
+                            group.get().getTerm(),
+                            group.get().getSummary(),
+                            group.get().getImageUri(),
+                            group.get().getDescription(),
+                            group.get().getMaxCount(),
+                            group.get().getPeopleId().size(),
+                            false));
                 } else {
                     groupService.removeGroup(group.get());
-                    return ResponseEntity.ok(group.get());
+                    return ResponseEntity.ok(new ResponseGroupModel(
+                            group.get().getId(),
+                            group.get().getTitle(),
+                            group.get().getLocation(),
+                            group.get().getAddress(),
+                            group.get().getTerm(),
+                            group.get().getSummary(),
+                            group.get().getImageUri(),
+                            group.get().getDescription(),
+                            group.get().getMaxCount(),
+                            group.get().getPeopleId().size(),
+                            false));
                 }
             } else {
                 throw new NotFoundException("Not Joined");
@@ -113,7 +146,18 @@ public class GroupController {
 
         groupService.insertGroup(group);
 
-        return ResponseEntity.ok(group);
+        return ResponseEntity.ok(new ResponseGroupModel(
+                group.getId(),
+                group.getTitle(),
+                group.getLocation(),
+                group.getAddress(),
+                group.getTerm(),
+                group.getSummary(),
+                group.getImageUri(),
+                group.getDescription(),
+                group.getMaxCount(),
+                group.getPeopleId().size(),
+                false));
     }
 
     @GetMapping("/list")
@@ -124,8 +168,20 @@ public class GroupController {
         if (user.isPresent()) {
             return ResponseEntity.ok(
                     groupService.findAddressAllGroup(
-                            user.get().getAddress()
-                    )
+                            user.get().getAddress()).stream()
+                            .map(
+                                group -> new ResponseGroupModel(
+                                        group.getId(),
+                                        group.getTitle(),
+                                        group.getLocation(),
+                                        group.getAddress(),
+                                        group.getTerm(),
+                                        group.getSummary(),
+                                        group.getImageUri(),
+                                        group.getDescription(),
+                                        group.getMaxCount(),
+                                        group.getPeopleId().size(),
+                                        group.getPeopleId().contains(user.get().getId()))).toArray()
             );
         } else {
             throw new NotFoundException("Id Not Found");
@@ -138,9 +194,31 @@ public class GroupController {
         if (group.isPresent()) {
             List<String> peopleId = group.get().getPeopleId();
             if (peopleId.contains(new Token().verifyToken(authorization))) {
-                return ResponseEntity.ok(new ResponseGroupModel(group.get(), true));
+                return ResponseEntity.ok(new ResponseGroupModel(
+                        group.get().getId(),
+                        group.get().getTitle(),
+                        group.get().getLocation(),
+                        group.get().getAddress(),
+                        group.get().getTerm(),
+                        group.get().getSummary(),
+                        group.get().getImageUri(),
+                        group.get().getDescription(),
+                        group.get().getMaxCount(),
+                        peopleId.size(),
+                        true));
             } else {
-                return ResponseEntity.ok(new ResponseGroupModel(group.get(), false));
+                return ResponseEntity.ok(new ResponseGroupModel(
+                        group.get().getId(),
+                        group.get().getTitle(),
+                        group.get().getLocation(),
+                        group.get().getAddress(),
+                        group.get().getTerm(),
+                        group.get().getSummary(),
+                        group.get().getImageUri(),
+                        group.get().getDescription(),
+                        group.get().getMaxCount(),
+                        peopleId.size(),
+                        false));
             }
         } else {
             throw new NotFoundException("postId Not Found");
