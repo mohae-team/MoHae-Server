@@ -47,26 +47,6 @@ public class MyPageController {
         }
     }
 
-    @RequestMapping(path = "/edit/image", method = RequestMethod.POST,
-            consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity editImageProfile(@RequestHeader("Authorization") String authorization,
-                                           @RequestParam("imageFile") MultipartFile imageFile) {
-        Optional<User> user = authService.getUserById(
-                new Token().verifyToken(authorization));
-
-
-
-        if (user.isPresent()) {
-
-
-            authService.saveUser(user.get());
-
-            return ok(user.get());
-        } else {
-            throw new NotFoundException("Id Not Found");
-        }
-    }
-
     @GetMapping("/get")
     public ResponseEntity getProfile(@RequestHeader("Authorization") String authorization) {
         Optional<User> user = authService.getUserById(
