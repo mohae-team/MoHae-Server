@@ -17,7 +17,7 @@ public class ImageController {
     @Autowired
     ResourceLoader resourceLoader;
 
-    private final String UPLOAD_ROOT = "src/main/resources/";
+    private final String UPLOAD_ROOT = "/";
 
     @GetMapping(value = "/image/{imageUri}", produces = MediaType.IMAGE_PNG_VALUE)
     public ResponseEntity getImage(@PathVariable("imageUri") String filename) {

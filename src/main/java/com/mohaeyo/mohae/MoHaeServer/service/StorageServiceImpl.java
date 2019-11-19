@@ -36,7 +36,7 @@ public class StorageServiceImpl implements StorageService {
                                 + filename);
             }
             try (InputStream inputStream = file.getInputStream()) {
-                Files.copy(inputStream, Paths.get("src/main/resources/").resolve(filename),
+                Files.copy(inputStream, Paths.get("/").resolve(filename),
                         StandardCopyOption.REPLACE_EXISTING);
             }
         }
