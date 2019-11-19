@@ -36,7 +36,7 @@ public class StorageServiceImpl implements StorageService {
                                 + filename);
             }
             try (InputStream inputStream = file.getInputStream()) {
-                Files.copy(inputStream, Paths.get("/").resolve(filename),
+                Files.copy(inputStream, Paths.get("/home/ubuntu/MoHae-Server/travis/images/").resolve(filename),
                         StandardCopyOption.REPLACE_EXISTING);
             }
         }
