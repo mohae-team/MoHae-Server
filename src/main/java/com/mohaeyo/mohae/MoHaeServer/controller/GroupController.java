@@ -68,7 +68,7 @@ public class GroupController {
         }
     }
 
-    @DeleteMapping("/cancel")
+    @PostMapping("/cancel")
     public ResponseEntity cancelGroup(@RequestHeader("Authorization") String authorization,
                                       @RequestBody CancelGroupModel cancelGroupModel) {
         int postId = cancelGroupModel.getId();
@@ -140,7 +140,7 @@ public class GroupController {
                     body.getSummary(),
                 "http://54.180.10.27:8080/mohae/image/" + image.getOriginalFilename(),
                     body.getDescription(),
-                    body.getMaxCount(),
+                    50,
                     peopleList
                 );
 
@@ -157,7 +157,7 @@ public class GroupController {
                 group.getDescription(),
                 group.getMaxCount(),
                 group.getPeopleId().size(),
-                false));
+                true));
     }
 
     @GetMapping("/list")
@@ -188,9 +188,9 @@ public class GroupController {
         }
     }
 
-    @GetMapping("/detail")
-    public ResponseEntity getGroup(@RequestHeader("Authorization") String authorization, @RequestBody GetGroupModel getGroupModel) {
-        Optional<Group> group = groupService.findGroup(getGroupModel.getPostId());
+    @GetMapping("/detail/{id}")
+    public ResponseEntity getGroup(@RequestHeader("Authorization") String authorization, @PathVariable("id") int id) {
+        Optional<Group> group = groupService.findGroup(id);
         if (group.isPresent()) {
             List<String> peopleId = group.get().getPeopleId();
             if (peopleId.contains(new Token().verifyToken(authorization))) {

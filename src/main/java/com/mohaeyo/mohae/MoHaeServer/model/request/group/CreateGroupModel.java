@@ -14,7 +14,7 @@ public class CreateGroupModel {
 
     String summary;
 
-    int maxCount;
+    String maxCount;
 
     String description;
 
@@ -60,11 +60,11 @@ public class CreateGroupModel {
         this.summary = summary;
     }
 
-    public int getMaxCount() {
+    public String getMaxCount() {
         return maxCount;
     }
 
-    public void setMaxCount(int maxCount) {
+    public void setMaxCount(String maxCount) {
         this.maxCount = maxCount;
     }
 
