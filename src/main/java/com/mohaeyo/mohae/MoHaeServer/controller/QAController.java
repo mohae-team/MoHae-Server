@@ -2,7 +2,7 @@ package com.mohaeyo.mohae.MoHaeServer.controller;
 
 import com.mohaeyo.mohae.MoHaeServer.exception.NotFoundException;
 import com.mohaeyo.mohae.MoHaeServer.model.entity.Answer;
-import com.mohaeyo.mohae.MoHaeServer.model.entity.QA;
+import com.mohaeyo.mohae.MoHaeServer.model.entity.Question;
 import com.mohaeyo.mohae.MoHaeServer.service.StorageService;
 import com.mohaeyo.mohae.MoHaeServer.service.auth.Token;
 import com.mohaeyo.mohae.MoHaeServer.model.entity.User;
@@ -14,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,20 +40,19 @@ public class QAController {
         storageService.store(image);
 
         if (user.isPresent()) {
-            QA qa = new QA(
+            Question question = new Question(
                         new Object().hashCode(),
                         body.getTitle(),
                         user.get().getUsername(),
                         user.get().getAddress(),
                         body.getSummary(),
                     "http://54.180.10.27:8080/mohae/image/" + image.getOriginalFilename(),
-                        body.getDescription(),
-                        Collections.emptyList()
+                        body.getDescription()
                     );
 
-            qaService.insertQA(qa);
+            qaService.insertQuestion(question);
 
-            return ResponseEntity.ok(qa);
+            return ResponseEntity.ok(question);
         } else {
             throw new NotFoundException("Id Not Found");
         }
@@ -65,19 +63,18 @@ public class QAController {
         String id = new Token().verifyToken(authorization);
 
         Optional<User> user = authService.getUserById(id);
-        Optional<QA> qa = qaService.findQa(createAnswerModel.getPostId());
+        Optional<Question> question = qaService.findQuestion(createAnswerModel.getPostId());
 
         if (user.isPresent()) {
-            if (qa.isPresent()) {
-                List<Answer> answerList = qa.get().getAnswerList();
-                answerList.add(
-                        new Answer(
-                                user.get().getUsername(),
-                                createAnswerModel.getAnswer()));
-                qa.get().setAnswerList(answerList);
-                qaService.insertQA(qa.get());
+            if (question.isPresent()) {
+                Answer answer = new Answer(
+                        new Object().hashCode(),
+                        createAnswerModel.getPostId(),
+                        user.get().getUsername(),
+                        createAnswerModel.getAnswer());
+                qaService.saveAnswer(answer);
 
-                return ResponseEntity.ok(qa);
+                return ResponseEntity.ok(answer);
             } else {
                 throw new NotFoundException("Qa Not Found");
             }
@@ -92,28 +89,22 @@ public class QAController {
         Optional<User> user = authService.getUserById(id);
 
         if (user.isPresent()) {
-            return ResponseEntity.ok(qaService.findAddressAllQA(
-                    user.get().getAddress()));
+            return ResponseEntity.ok(qaService.findAddressAllQuestion(user.get().getAddress()));
         } else {
             throw new NotFoundException("Id Not Found");
         }
     }
 
-    @GetMapping("/answer/list")
-    public ResponseEntity getListAnswer(@RequestBody GetListAnswerModel getListAnswerModel) {
-        int id = getListAnswerModel.getPostId();
-        Optional<QA> qa = qaService.findQa(id);
+    @GetMapping("/answer/list/{id}")
+    public ResponseEntity getListAnswer(@PathVariable("id") int id) {
+        List<Answer> answerList = qaService.findAddressAllAnswer(id);
 
-        if (qa.isPresent()) {
-            return ResponseEntity.ok(qa.get().getAnswerList());
-        } else {
-            throw new NotFoundException("QA Not Found");
-        }
+        return ResponseEntity.ok(answerList);
     }
 
-    @GetMapping("/question/detail")
-    public ResponseEntity getGroup(@RequestBody GetQAModel getQaModel) {
-        Optional<QA> qa = qaService.findQa(getQaModel.getPostId());
+    @GetMapping("/question/detail/{id}")
+    public ResponseEntity getGroup(@PathVariable("id") int id) {
+        Optional<Question> qa = qaService.findQuestion(id);
         if (qa.isPresent()) {
             return ResponseEntity.ok(qa.get());
         } else {

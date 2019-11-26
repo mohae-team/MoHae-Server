@@ -28,10 +28,8 @@ public class GroupController {
     @Autowired
     StorageService storageService;
 
-    @PostMapping("/join")
-    public ResponseEntity joinGroup(@RequestHeader("Authorization") String authorization,
-                                    @RequestBody JoinGroupModel joinGroupModel) {
-        int postId = joinGroupModel.getId();
+    @PostMapping("/join/{id}")
+    public ResponseEntity joinGroup(@RequestHeader("Authorization") String authorization, @PathVariable("id") int postId) {
 
         String id = new Token().verifyToken(authorization);
 
@@ -68,11 +66,8 @@ public class GroupController {
         }
     }
 
-    @PostMapping("/cancel")
-    public ResponseEntity cancelGroup(@RequestHeader("Authorization") String authorization,
-                                      @RequestBody CancelGroupModel cancelGroupModel) {
-        int postId = cancelGroupModel.getId();
-
+    @PostMapping("/cancel/{id}")
+    public ResponseEntity cancelGroup(@RequestHeader("Authorization") String authorization , @PathVariable("id") int postId) {
         String id = new Token().verifyToken(authorization);
 
         Optional<Group> group = groupService.findGroup(postId);

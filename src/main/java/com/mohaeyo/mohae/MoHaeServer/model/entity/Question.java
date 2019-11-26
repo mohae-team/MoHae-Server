@@ -5,9 +5,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.Collections;
 import java.util.List;
 
-@Document(collection = "qa")
-public class QA {
-    int postId;
+@Document(collection = "question")
+public class Question {
+    int id;
 
     String title;
 
@@ -21,36 +21,32 @@ public class QA {
 
     String description;
 
-    List<Answer> answerList;
-
-    public QA(int postId, String title, String username, String address, String summary, String imageUri, String description, List<Answer> answerList) {
-        this.postId = postId;
+    public Question(int id, String title, String username, String address, String summary, String imageUri, String description) {
+        this.id = id;
         this.title = title;
         this.username = username;
         this.address = address;
         this.summary = summary;
         this.imageUri = imageUri;
         this.description = description;
-        this.answerList = answerList;
     }
 
-    public QA() {
-        this.postId = 0;
+    public Question() {
+        this.id = 0;
         this.title = "";
         this.username = "";
         this.address = "";
         this.summary = "";
         this.imageUri = "";
         this.description = "";
-        this.answerList = Collections.emptyList();
     }
 
     public int getPostId() {
-        return postId;
+        return id;
     }
 
     public void setPostId(int postId) {
-        this.postId = postId;
+        this.id = postId;
     }
 
     public String getTitle() {
@@ -99,13 +95,5 @@ public class QA {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public List<Answer> getAnswerList() {
-        return answerList;
-    }
-
-    public void setAnswerList(List<Answer> answerList) {
-        this.answerList = answerList;
     }
 }

@@ -7,8 +7,6 @@ import com.mohaeyo.mohae.MoHaeServer.model.request.feedback.CreateFeedbackModel;
 import com.mohaeyo.mohae.MoHaeServer.service.StorageService;
 import com.mohaeyo.mohae.MoHaeServer.service.auth.Token;
 import com.mohaeyo.mohae.MoHaeServer.model.entity.User;
-import com.mohaeyo.mohae.MoHaeServer.model.request.feedback.GetFeedbackModel;
-import com.mohaeyo.mohae.MoHaeServer.model.request.feedback.LikeFeedbackModel;
 import com.mohaeyo.mohae.MoHaeServer.model.response.ResponseFeedbackModel;
 import com.mohaeyo.mohae.MoHaeServer.service.auth.AuthService;
 import com.mohaeyo.mohae.MoHaeServer.service.feedback.FeedbackService;
@@ -37,9 +35,8 @@ public class FeedbackController {
     @Autowired
     StorageService storageService;
 
-    @PostMapping("/like")
-    public ResponseEntity likeFeedback(@RequestHeader("Authorization") String authorization, @RequestBody LikeFeedbackModel likeFeedbackModel) {
-        int postId = likeFeedbackModel.getId();
+    @PostMapping("/like/{id}")
+    public ResponseEntity likeFeedback(@RequestHeader("Authorization") String authorization, @PathVariable("id") int postId) {
 
         String id = new Token().verifyToken(authorization);
 
@@ -84,10 +81,8 @@ public class FeedbackController {
         }
     }
 
-    @PostMapping("/hate")
-    public ResponseEntity hateFeedback(@RequestHeader("Authorization") String authorization, @RequestBody LikeFeedbackModel likeFeedbackModel) {
-        int postId = likeFeedbackModel.getId();
-
+    @PostMapping("/hate/{id}")
+    public ResponseEntity hateFeedback(@RequestHeader("Authorization") String authorization, @PathVariable("id") int postId) {
         String id = new Token().verifyToken(authorization);
 
         Optional<Feedback> feedback = feedbackService.findFeedback(postId);
@@ -191,9 +186,9 @@ public class FeedbackController {
         }
     }
 
-    @GetMapping("/detail")
-    public ResponseEntity getFeedback(@RequestHeader("Authorization") String token, @RequestBody GetFeedbackModel getFeedbackModel) {
-        Optional<Feedback> feedback = feedbackService.findFeedback(getFeedbackModel.getPostId());
+    @GetMapping("/detail/{id}")
+    public ResponseEntity getFeedback(@RequestHeader("Authorization") String token, @PathVariable("id") int id) {
+        Optional<Feedback> feedback = feedbackService.findFeedback(id);
         if (feedback.isPresent()) {
             List<String> likePeopleId = feedback.get().getLikePeopleId();
             List<String> hatePeopleId = feedback.get().getHatePeopleId();

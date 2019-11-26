@@ -1,11 +1,7 @@
 package com.mohaeyo.mohae.MoHaeServer.controller;
 
-import com.mohaeyo.mohae.MoHaeServer.model.request.group.JoinGroupModel;
-import com.mohaeyo.mohae.MoHaeServer.service.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

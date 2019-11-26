@@ -1,16 +1,25 @@
 package com.mohaeyo.mohae.MoHaeServer.service.qa;
 
-import com.mohaeyo.mohae.MoHaeServer.model.entity.QA;
+import com.mohaeyo.mohae.MoHaeServer.model.entity.Answer;
+import com.mohaeyo.mohae.MoHaeServer.model.entity.Question;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface QAService {
-    void saveQA(QA qa);
+    void saveQuestion(Question question);
 
-    void insertQA(QA qa);
+    void insertQuestion(Question question);
 
-    Optional<QA> findQa(int id);
+    Optional<Question> findQuestion(int id);
 
-    List<QA> findAddressAllQA(String address);
+    List<Question> findAddressAllQuestion(String address);
+
+    void saveAnswer(Answer answer);
+
+    void insertAnswer(Answer answer);
+
+    Optional<Answer> findAnswer(int id);
+
+    List<Answer> findAddressAllAnswer(int postId);
 }
