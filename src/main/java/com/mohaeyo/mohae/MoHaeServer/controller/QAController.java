@@ -95,7 +95,7 @@ public class QAController {
         }
     }
 
-    @GetMapping("/answer/list/{id}")
+    @GetMapping("/answer/list/{questionId}")
     public ResponseEntity getListAnswer(@PathVariable("questionId") int id) {
         List<Answer> answerList = qaService.findAddressAllAnswer(id);
 
