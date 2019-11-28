@@ -1,16 +1,16 @@
 package com.mohaeyo.mohae.MoHaeServer.model.request.qa;
 
 public class CreateAnswerModel {
-    int postId;
+    int questionId;
 
     String answer;
 
-    public int getPostId() {
-        return postId;
+    public int getQuestionId() {
+        return questionId;
     }
 
-    public void setPostId(int postId) {
-        this.postId = postId;
+    public void setQuestionId(int questionId) {
+        this.questionId = questionId;
     }
 
     public String getAnswer() {

@@ -63,13 +63,13 @@ public class QAController {
         String id = new Token().verifyToken(authorization);
 
         Optional<User> user = authService.getUserById(id);
-        Optional<Question> question = qaService.findQuestion(createAnswerModel.getPostId());
+        Optional<Question> question = qaService.findQuestion(createAnswerModel.getQuestionId());
 
         if (user.isPresent()) {
             if (question.isPresent()) {
                 Answer answer = new Answer(
                         new Object().hashCode(),
-                        createAnswerModel.getPostId(),
+                        createAnswerModel.getQuestionId(),
                         user.get().getUsername(),
                         createAnswerModel.getAnswer());
                 qaService.saveAnswer(answer);
@@ -96,7 +96,7 @@ public class QAController {
     }
 
     @GetMapping("/answer/list/{id}")
-    public ResponseEntity getListAnswer(@PathVariable("id") int id) {
+    public ResponseEntity getListAnswer(@PathVariable("questionId") int id) {
         List<Answer> answerList = qaService.findAddressAllAnswer(id);
 
         return ResponseEntity.ok(answerList);
