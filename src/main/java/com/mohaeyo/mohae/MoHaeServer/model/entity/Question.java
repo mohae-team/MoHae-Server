@@ -41,12 +41,12 @@ public class Question {
         this.description = "";
     }
 
-    public int getPostId() {
+    public int getId() {
         return id;
     }
 
-    public void setPostId(int postId) {
-        this.id = postId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitle() {
