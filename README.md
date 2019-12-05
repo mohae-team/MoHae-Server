@@ -29,9 +29,7 @@
 * 또한, commit message의 description은 꼭 적고 코드 변경 사항의 What보다는 Why에 근거한 설명을 적도록 한다. 
 
 ## Language
-
-1. Kotlin
-2. Java
+1. Java
 
 ## Framwork
 
@@ -41,23 +39,15 @@
 
 1. 3-Tier Architecture
 
-2. MySql
+2. MongoDB
 
-3. Reactor
-
-4. Clean Code
-
-5. Functional Reactive Programming
+3. Clean Code
 
 ## Test
 
-1. TDD
+1. Mokito
 
-2. Kluent
-
-3. Mokito
-
-4. JUnit5
+2. JUnit5
 
 ## Task
 
